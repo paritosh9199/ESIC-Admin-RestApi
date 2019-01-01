@@ -1,0 +1,25 @@
+{
+  "name": "restadmin",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paritosh",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.4.1",
+    "moongoose": "0.0.5",
+    "validator": "^10.10.0"
+  }
+}
