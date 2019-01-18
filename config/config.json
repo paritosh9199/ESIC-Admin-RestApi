@@ -6,8 +6,13 @@
     },
     "development": {
       "PORT": 3000,
-      "MONGODB_URI": "mongodb://localhost:27017/EsicRestAdmin",
+      "MONGODB_URI": "mongodb://rufus:delta9@ds161224.mlab.com:61224/esic-db",
       "JWT_SECRET": "deploymentSecret"
+    },
+    "production":{
+      "PORT": 3000,
+      "MONGODB_URI": "mongodb://rufus:delta9@ds161224.mlab.com:61224/esic-db",
+      "JWT_SECRET": "productionSecret"
     }
   }
   
