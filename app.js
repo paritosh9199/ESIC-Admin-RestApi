@@ -7,7 +7,8 @@ const { ObjectID } = require('mongodb');
 const multer = require('multer');
 const path = require('path');
 
-var session = require('express-session')
+var session = require('express-session');
+var fs = require('fs');
 var { mongoose } = require('./db/mongoose');
 // var {Todo} = require('./models/todo');
 var { User } = require('./models/user');
@@ -41,9 +42,49 @@ app.get('/', function (req, res) {
 
 app.get('/login', function (req, res) {
 
-    res.render('./pages/login.ejs');
+    res.render('./pages/admin/login.ejs');
 });
+app.get('/t', function (req, res) {
 
+    res.render('./pages/admin/template.ejs');
+});
+app.get('/notification.manage',authenticate, function (req, res) {
+
+    var usr = {
+        "user": req.user
+    }
+    // res.render('./pages/admin/login.ejs');
+
+    res.render('./pages/admin/notfication.ejs',usr);
+});
+app.get('/notification.add',authenticate, function (req, res) {
+
+    var usr = {
+        "user": req.user
+    }
+    // res.render('./pages/admin/login.ejs');
+
+    res.render('./pages/admin/addNotif.ejs',usr);
+});
+//POST getCount
+app.post('/getCount', function (req, res) {
+    var imgCount = 0, docCount = 0, notifCount = 0;
+    Image.getCount(function (img) {
+        imgCount = img;
+        Notification.getCount(function(notif){
+            notifCount = notif;
+            Document.getCount(function(doc){
+                docCount = doc;
+                res.status(200).send({
+                    notifCount,
+                    imgCount,
+                    docCount
+                });
+            });
+        });
+    });
+    
+});
 //POST file
 // multer middleware
 const imgStorage = multer.diskStorage({
@@ -101,7 +142,7 @@ function checkFileType(type, file, cb) {
 
 app.get('/fileUpload/:type', (req, res) => {
     var type = req.params.type;
-    res.render('./pages/file', { type })
+    res.render('./pages/admin/file', { type })
 });
 
 app.post('/fileUpload/:type', (req, res) => {
@@ -110,28 +151,28 @@ app.post('/fileUpload/:type', (req, res) => {
         imgUpload(req, res, (err) => {
             console.log(req.file);
             if (err) {
-                res.render('./pages/file', {
+                res.render('./pages/admin/file', {
                     msg: err,
                     type
                 });
             } else {
                 if (req.file == undefined) {
-                    res.render('./pages/file', {
+                    res.render('./pages/admin/file', {
                         msg: 'Error: No File Selected!',
                         type
                     });
                 } else {
-//todo -- add usetag
+                    var tags = ["tag1", "tag2"];
                     var data = {
                         name: req.file.originalname,
                         type: req.file.mimetype,
                         createdOn: Date.now(),
-                        path: `/uploads/img/${req.file.filename}`,
-                        // useTag
+                        path: `/uploads/img/${req.file.filename}`
                     }
                     var image = new Image(data);
                     image.save().then(function (data) {
-                        res.render('./pages/file', {
+                        image.addTags(tags);
+                        res.render('./pages/admin/file', {
                             msg: 'File Uploaded!',
                             file: `/uploads/img/${req.file.filename}`,
                             type
@@ -141,32 +182,31 @@ app.post('/fileUpload/:type', (req, res) => {
                 }
             }
         });
-    }else if (type == 'doc') {
+    } else if (type == 'doc') {
         docUpload(req, res, (err) => {
             console.log(req.file);
             if (err) {
-                res.render('./pages/file', {
+                res.render('./pages/admin/file', {
                     msg: err,
                     type
                 });
             } else {
                 if (req.file == undefined) {
-                    res.render('./pages/file', {
+                    res.render('./pages/admin/file', {
                         msg: 'Error: No File Selected!',
                         type
                     });
                 } else {
-//todo -- add usetag - $push
                     var data = {
                         name: req.file.originalname,
                         type: req.file.mimetype,
                         createdOn: Date.now(),
-                        path: `/uploads/doc/${req.file.filename}`,
-                        // useTag
+                        path: `/uploads/doc/${req.file.filename}`
                     }
                     var doc = new Document(data);
                     doc.save().then(function (data) {
-                        res.render('./pages/file', {
+                        // docs.addTags(tags);
+                        res.render('./pages/admin/file', {
                             msg: 'File Uploaded!',
                             file: `/uploads/doc/${req.file.filename}`,
                             type
@@ -176,15 +216,15 @@ app.post('/fileUpload/:type', (req, res) => {
                 }
             }
         });
-    }else{
+    } else {
         res.send('invalid');
     }
 });
 
-app.get('/fileRead/:type',function(req,res){
+app.get('/fileRead/:type', function (req, res) {
     var type = req.params.type;
     var id = req.body.id;
-    if(type == 'img'){
+    if (type == 'img') {
         Image.getAllimage(function (img) {
             try {
                 res.status(200).send(img);
@@ -192,7 +232,7 @@ app.get('/fileRead/:type',function(req,res){
                 res.status(400).send(e);
             }
         });
-    }else if(type == 'doc'){
+    } else if (type == 'doc') {
         Document.getAlldoc(function (doc) {
             try {
                 res.status(200).send(doc);
@@ -200,37 +240,39 @@ app.get('/fileRead/:type',function(req,res){
                 res.status(400).send(e);
             }
         });
-    }else if(type == 'vid'){
+    } else if (type == 'vid') {
 
-    }else{
+    } else {
         res.send('invalid');
     }
 });
 
-app.post('/fileDelete/:type',function(req,res){
+app.post('/fileDelete/:type', function (req, res) {
     var type = req.params.type;
     var id = req.body.id;
-    if(type == 'img'){
+    if (type == 'img') {
         Image.deleteByID(id, function (docs) {
             try {
+                // fs.unlink(docs.path);
                 res.status(200).send(docs);
             } catch (error) {
                 console.log(error)
                 res.status(400).send(error);
             }
         });
-    }else if(type == 'doc'){
+    } else if (type == 'doc') {
         Document.deleteByID(id, function (docs) {
             try {
+                // fs.unlink(docs.path);
                 res.status(200).send(docs);
             } catch (error) {
                 console.log(error)
                 res.status(400).send(error);
             }
         });
-    }else if(type == 'vid'){
-
-    }else{
+    } else if (type == 'vid') {
+        //todo make video
+    } else {
         res.send('invalid');
     }
 });
@@ -238,7 +280,7 @@ app.post('/fileDelete/:type',function(req,res){
 
 
 //POST notif
-app.post('/createNotif', authenticate, function (req, res) {
+app.post('/createNotif', function (req, res) {
 
     var body = _.pick(req.body, ['content', 'link']);
     var notif = new Notification(body);
@@ -292,7 +334,7 @@ app.get('/me', authenticate, (req, res) => {
     }
     // res.send(user);
     // console.log(user);
-    res.render("./pages/dash.ejs", usr);
+    res.render("./pages/admin/indexAdmin", usr);
 });
 
 app.post('/login', (req, res) => {

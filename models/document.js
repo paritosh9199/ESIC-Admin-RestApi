@@ -29,9 +29,7 @@ var DocumentSchema = new mongoose.Schema({
     },
     useTag: [{
         tag: {
-            type: String,
-            required: true,
-            default: "doc"
+            type: String
         }
     }]
     // link: {
@@ -67,7 +65,30 @@ var DocumentSchema = new mongoose.Schema({
 // };
 
 
+DocumentSchema.methods.addTags = function (tags) {
+    var doc = this;
+    for(var i = 0; i<tags.length;i++){
+        var tag = tags[i];
+        doc.useTag.push({ tag });
+    }
+    return doc.save().then(() => {
+        return doc;
+    });
+};
 
+DocumentSchema.statics.findBySingleToken = function (tag) {
+    var doc = this;
+    return doc.findOne({
+        'useTag.tag': tag
+    });
+};
+
+DocumentSchema.statics.findByMultipleToken = function (tags) {
+    var doc = this;
+    return doc.finde({
+        useTag: { $all: tags }
+    });
+};
 
 DocumentSchema.statics.findById = function (id) {
     var doc = this;

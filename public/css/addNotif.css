@@ -1,0 +1,16 @@
+.tags-module{
+    position: relative !important;
+    overflow: hidden;
+    height: 100% !important;
+    /* width: 10px; */
+    /* border: 5px solid black !important; */
+    max-height: 125px !important;
+}
+
+/* .long-tag-table{
+    height: 300px !important;
+} */
+
+.date-picker{
+    
+}

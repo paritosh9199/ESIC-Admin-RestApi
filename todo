@@ -1,3 +1,14 @@
-- make file count route 
+
 - make templates for all routes 
 - send deleted file to backup bin folder 
+- add size in the files schema
+- make video route
+- add useTag support to document,Images and Videos
+
+-work on the list notif
+
+--table for file
+
+file sl-image[jpg,doc etc..],name,size,createdOn, Tags[show in a model],type
+actions- view Tag ,delete,download
+drop files to upload(img and doc)

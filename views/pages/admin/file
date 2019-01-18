@@ -1,0 +1,217 @@
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="DataTables_Table_0"></label></div><table class="file-manager file-manager-list d-none table-responsive dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1079px;">
+              <thead>
+                <tr role="row"><th colspan="5" class="text-left bg-white" rowspan="1">
+                    <form action="/file-upload" class="dropzone dz-clickable"><div class="dz-default dz-message"><span>Drop files here to upload</span></div></form>
+                  </th></tr>
+                <tr role="row"><th style="width: 7.8px;" class="hide-sort-icons sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label=": activate to sort column ascending"></th><th class="text-left sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 409.8px;" aria-label="Name: activate to sort column ascending">Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 115.8px;" aria-label="Size: activate to sort column ascending">Size</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 133.8px;" aria-label="Type: activate to sort column ascending">Type</th><th class="text-right sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 190.8px;" aria-label="Actions: activate to sort column descending" aria-sort="ascending">Actions</th></tr>
+              </thead>
+              <tbody>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+              <tr role="row" class="odd">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">New Folder</h5>
+                    <span class="file-manager__item-meta">Last opened 3 minutes ago.</span>
+                  </td>
+                  <td class="">0 KB</td>
+                  <td class="">Directory</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr><tr role="row" class="even">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">Photos</h5>
+                    <span class="file-manager__item-meta">Last opened yesterday.</span>
+                  </td>
+                  <td class="">1.29 GB</td>
+                  <td class="">Directory</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr><tr role="row" class="odd">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">Movies</h5>
+                    <span class="file-manager__item-meta">Last opened 4 hours ago.</span>
+                  </td>
+                  <td class="">182 GB</td>
+                  <td class="">Directory</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr><tr role="row" class="even">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">Backups</h5>
+                    <span class="file-manager__item-meta">Last opened 2 hours ago.</span>
+                  </td>
+                  <td class="">2TB</td>
+                  <td class="">Directory</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr><tr role="row" class="odd">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">Projects</h5>
+                    <span class="file-manager__item-meta">Last opened 12 days ago.</span>
+                  </td>
+                  <td class="">7 GB</td>
+                  <td class="">Directory</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr><tr role="row" class="even">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">Old Files</h5>
+                    <span class="file-manager__item-meta">Last opened 3 months ago.</span>
+                  </td>
+                  <td class="">9.63 GB</td>
+                  <td class="">Directory</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr><tr role="row" class="odd">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">wedding_photos_001.zip</h5>
+                    <span class="file-manager__item-meta">Last opened 2 weeks ago.</span>
+                  </td>
+                  <td class="">186 MB</td>
+                  <td class="">Document</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr><tr role="row" class="even">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">01_project_description.doc</h5>
+                    <span class="file-manager__item-meta">Last opened 3 days ago.</span>
+                  </td>
+                  <td class="">23 KB</td>
+                  <td class="">Document</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr><tr role="row" class="odd">
+                  <td class="file-manager__item-icon" tabindex="0">
+                    <div>
+                      <i class="material-icons"></i>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <h5 class="file-manager__item-title">client_feedback.doc</h5>
+                    <span class="file-manager__item-meta">Last opened 6 days ago.</span>
+                  </td>
+                  <td class="">86 KB</td>
+                  <td class="">Document</td>
+                  <td class="file-manager__item-actions sorting_1">
+                    <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                      <button type="button" class="btn btn-white active-light">
+                        <i class="material-icons"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="material-icons"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr></tbody>
+            </table><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 9 of 9 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div>z

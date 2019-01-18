@@ -3,21 +3,21 @@ const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
-const {MongoClient, ObjectID} = require('mongodb');
+const { MongoClient, ObjectID } = require('mongodb');
 
 var ImageSchema = new mongoose.Schema({
 
     name: {
         type: String,
         required: true,
-        default:'image',
+        default: 'image',
         trim: true,
         minlength: 1
     },
     type: {
         type: String,
         required: true,
-        default:'image',
+        default: 'image',
         trim: true,
         minlength: 1
     },
@@ -34,11 +34,18 @@ var ImageSchema = new mongoose.Schema({
         trim: true,
         minlength: 1
     },
+    // useTag: [{
+    //     tag: {
+    //         type: String,
+    //         // required: true,
+    //         default:"image"
+    //     }
+    // }],
+
     useTag: [{
         tag: {
             type: String,
-            // required: true,
-            default:"image"
+            // required: true
         }
     }]
     // link: {
@@ -73,7 +80,31 @@ var ImageSchema = new mongoose.Schema({
 //     });
 // };
 
+ImageSchema.methods.addTags = function (tags) {
+    var image = this;
+    for (var i = 0; i < tags.length; i++) {
+        var tag = tags[i];
+        image.useTag.push({ tag });
+    }
+    return image.save().then(() => {
+        return image;
+    });
+};
 
+ImageSchema.statics.findBySingleToken = function (tag) {
+    var image = this;
+    return Image.findOne({
+        'useTag.tag': tag
+    });
+};
+
+
+ImageSchema.statics.findByMultipleToken = function (tags) {
+    var image = this;
+    return Image.finde({
+        useTag: { $all: tags }
+    });
+};
 
 ImageSchema.statics.findById = function (id) {
     var image = this;
@@ -100,19 +131,19 @@ ImageSchema.statics.getCount = function (callback) {
     }, (err) => {
         console.log('Unable to fetch image', err);
         return err;
-       
+
     });
 };
 
-ImageSchema.statics.deleteByID = function (id,callback) {
+ImageSchema.statics.deleteByID = function (id, callback) {
     var image = this;
     image.findOneAndDelete({
-        _id:    new ObjectID(id)
+        _id: new ObjectID(id)
     }).then((data) => {
         callback(data);
     }, (err) => {
         console.log('Unable to delete image', err);
-        return err;      
+        return err;
     });
 };
 

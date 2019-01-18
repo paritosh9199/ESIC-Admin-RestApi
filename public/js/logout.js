@@ -2,6 +2,8 @@ function _(id){
     return document.getElementById(id);
 }
 
+document.getElementById("hidden").style.display = "none";
+
 document.getElementById('logout-btn').addEventListener('click',function(){
     $.ajax({
         type: 'POST',
