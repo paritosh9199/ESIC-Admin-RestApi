@@ -4676,6 +4676,6 @@ border-color: #007bff !important;
 box-shadow: 0 .313rem .719rem rgba(0,123,255,.1),0 .156rem .125rem rgba(0,0,0,.06);
 } */
 
-.err-msg{
-  color:red;
+#err-msg{
+  color:red !important;
 }

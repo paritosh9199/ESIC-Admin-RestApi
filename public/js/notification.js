@@ -30,7 +30,7 @@ function setNotif(notifs) {
                       <td class="cell100 column1 p-l-10">
                       ${i + 1}.
                       </td>
-                      <td class="cell100 column2">${(notif.content)}${i + 1}</td>
+                      <td class="cell100 column2">${(notif.content)}</td>
                       <td class="cell100 column3">${timeConverter(notif.createdOn)}</td>
                       <td class="cell100 column4">${timeConverter(notif.expireOn)}</td>
                       <td class="cell100 column5 p-r-10 center-align">

@@ -1,4 +1,4 @@
-require('./config/config');
+var { env } = require('./config/config');
 
 const _ = require('lodash');
 const express = require('express');
@@ -48,32 +48,32 @@ app.get('/t', function (req, res) {
 
     res.render('./pages/admin/template.ejs');
 });
-app.get('/notification.manage',authenticate, function (req, res) {
+app.get('/notification.manage', authenticate, function (req, res) {
 
     var usr = {
         "user": req.user
     }
     // res.render('./pages/admin/login.ejs');
 
-    res.render('./pages/admin/notfication.ejs',usr);
+    res.render('./pages/admin/notfication.ejs', usr);
 });
-app.get('/notification.add',authenticate, function (req, res) {
+app.get('/notification.add', authenticate, function (req, res) {
 
     var usr = {
         "user": req.user
     }
     // res.render('./pages/admin/login.ejs');
 
-    res.render('./pages/admin/addNotif.ejs',usr);
+    res.render('./pages/admin/addNotif.ejs', usr);
 });
 //POST getCount
 app.post('/getCount', function (req, res) {
     var imgCount = 0, docCount = 0, notifCount = 0;
     Image.getCount(function (img) {
         imgCount = img;
-        Notification.getCount(function(notif){
+        Notification.getCount(function (notif) {
             notifCount = notif;
-            Document.getCount(function(doc){
+            Document.getCount(function (doc) {
                 docCount = doc;
                 res.status(200).send({
                     notifCount,
@@ -83,7 +83,7 @@ app.post('/getCount', function (req, res) {
             });
         });
     });
-    
+
 });
 //POST file
 // multer middleware
@@ -241,7 +241,7 @@ app.get('/fileRead/:type', function (req, res) {
             }
         });
     } else if (type == 'vid') {
-
+        res.send('vid');
     } else {
         res.send('invalid');
     }
@@ -280,18 +280,19 @@ app.post('/fileDelete/:type', function (req, res) {
 
 
 //POST notif
-app.post('/createNotif', function (req, res) {
+app.post('/createNotif', authenticate, function (req, res) {
 
-    var body = _.pick(req.body, ['content', 'link']);
-    var notif = new Notification(body);
+    var body = _.pick(req.body, ['content', 'link', 'expireOn']);
+    var notif = new Notification(body);    
     notif.save().then(() => {
         res.send({ success: true });
     }).catch((e) => {
+        console.log(e);
         res.status(400).send(e);
     })
 });
 
-app.post('/deleteNotif', function (req, res) {
+app.post('/deleteNotif', authenticate, function (req, res) {
     var body = _.pick(req.body, ['id']);
     Notification.deleteByID(body.id, function (docs) {
         try {
@@ -364,5 +365,5 @@ app.post('/logout', authenticate, (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Started up at port ${port}`);
+    console.log(`Started up at port: ${port}, environment: ${env}`);
 });

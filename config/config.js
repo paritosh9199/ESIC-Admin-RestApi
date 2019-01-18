@@ -8,3 +8,5 @@ if (env === 'development' || env === 'test'|| env === 'production') {
     process.env[key] = envConfig[key];
   });
 }
+
+module.exports = {env};
