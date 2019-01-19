@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="no-js h-100" lang="en">
+
+<head>
+  <%var newImg = true;%>
+  <%var page="Add New Image-Esic Admin"%>
+  <%
+    include ./partials/header %>
+  <!--===============================================================================================-->
+  <!-- <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css"> -->
+  <!--===============================================================================================-->
+  <!-- <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css"> -->
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css" />
+
+  <!-- <link rel="stylesheet" href="css/table.css"> -->
+
+  <link rel="stylesheet" href="css/addTags.css" />
+
+  <link rel="stylesheet" href="css/spin.css" />
+
+
+</head>
+
+<body class="h-100">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Main Sidebar -->
+      <% include ./partials/nav-aside %>
+
+      <!-- End Main Sidebar -->
+      <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+        <% include ./partials/nav-main %>
+        <!-- / .main-navbar -->
+
+        <div id="top-alert">
+
+        </div>
+
+
+
+        <div class="main-content-container container-fluid px-4">
+          <!-- Page Header -->
+          <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+              <span class="text-uppercase page-subtitle">Image Upload</span>
+              <h3 class="page-title">Add New Image</h3>
+            </div>
+          </div>
+          <!-- End Page Header -->
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="card card-small mb-3">
+                <form id="upload-form" action="/fileUpload/img" method="POST" enctype="multipart/form-data">
+                  <div class="row no-gutters border-bottom">
+                    <div class="file-manager-cards__dropzone w-100 p-2">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-primary" type="reset" id="inputGroupFileAddon03">
+                            Clear
+                          </button>
+                        </div>
+                        <div class="custom-file">
+                          <input type="file" name="fileFeild" class="custom-file-input" id="inputGroupFile03"
+                            aria-describedby="inputGroupFileAddon03" accept="image/png,image/jpg,image/jpeg,image/pdf,image/gif" />
+                          <label id="label-input" class="custom-file-label" for="inputGroupFile03">Choose an image</label>
+                        </div>
+                      </div>
+                      <!-- <button type="submit" class="btn">Submit</button> -->
+                      <div id="file-info" class="m-l-20">
+                        <div id="file-name" class="image-stats">
+                          <h6>Image Name:&nbsp;</h6>
+                          <span id="fl-nm">-</span>
+                        </div>
+                        <div id="file-size" class="image-stats">
+                          <h6>Image Size:&nbsp;</h6>
+                          <span id="fl-sz">-</span>
+                        </div>
+                        <div id="file-tags" class="image-stats">
+                          <h6>Image Tags:&nbsp;</h6>
+                          <span id="fl-tg">-</span>
+                        </div><br>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row no-gutters p-2">
+                    <div class="col-lg-3 mb-2 mb-lg-0">
+                      <!-- <form action="POST">
+                                                <div class="input-group input-group-seamless">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <i class="material-icons"></i>
+                                                        </div>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm file-manager-cards__search" placeholder="Search files">
+                                                </div>
+                                            </form> -->
+                    </div>
+                    <div class="col">
+                      <div class="d-flex ml-lg-auto my-auto">
+                        <div class="btn-group btn-group-sm mr-2 ml-lg-auto" role="group" aria-label="Table row actions">
+                          <!-- <button type="button" class="btn btn-white">
+                            <i class="material-icons"></i>
+                          </button>
+                          <button type="button" class="btn btn-white">
+                            <i class="material-icons"></i>
+                          </button>
+                          <button type="button" class="btn btn-white">
+                            <i class="material-icons"></i>
+                          </button>
+                          <button type="button" class="btn btn-danger">
+                            <i class="fas fa-eraser"></i>
+                          </button> -->
+                        </div>
+                        <!-- <button class="btn btn-sm btn-accent d-inline-block ml-auto ml-lg-0">
+                                          <i class="material-icons"></i> Add New </button> -->
+                        <button id="doc-upload-submit" class="btn btn-sm btn-accent d-inline-block ml-auto ml-lg-0">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+                <div id="spinner" class="w-100">
+
+                  <br><br><br><br><br><br>
+                  <div id="spnnr-loder">
+                    <!-- <div class=" js-preloader flex-center"> -->
+                    <!-- UPLOADING -->
+                    <div class="dots w-100">
+                      <div class="dot">i</div>
+                      <div class="dot">i</div>
+                      <div class="dot">i</div>
+                    </div>
+                    <!-- </div> -->
+                  </div>
+                  <br><br><br><br><br><br>
+                </div>
+                <script>document.getElementById("spinner").style.display = "none";</script>
+
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div id="tags-card" class="card card-small">
+                <div class="card-header border-bottom">
+                  <h6 class="m-0">Categories/Tags</h6>
+                </div>
+                <div class="card-body p-0 ">
+                  <ul class="list-group list-group-flush ">
+                    <li class="list-group-item px-3 pb-2 long-tag-table">
+                      <div class="js-pscroll tags-module">
+
+                        <div id="tags-collection">
+
+                        </div>
+
+                      </div>
+                    </li>
+                    <li class="list-group-item d-flex p-t-100 px-3">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="New category/Tag" aria-label="Add new category/Tag"
+                          aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-white px-2" type="button">
+                            <i class="material-icons">add</i>
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% include ./partials/footer %>
+      </main>
+    </div>
+  </div>
+
+  <% include ./partials/dependencies %>
+
+  <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script type="module" src="js/spin.js"></script>
+
+
+  <script>
+
+
+    $(".js-pscroll").each(function () {
+      var ps = new PerfectScrollbar(this);
+
+      $(window).on("resize", function () {
+        ps.update();
+      });
+    });
+  </script>
+
+  <script src="js/addImg.js"></script>
+  <!--===============================================================================================-->
+</body>
+
+</html>

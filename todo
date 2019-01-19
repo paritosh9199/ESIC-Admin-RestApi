@@ -12,3 +12,29 @@
 file sl-image[jpg,doc etc..],name,size,createdOn, Tags[show in a model],type
 actions- view Tag ,delete,download
 drop files to upload(img and doc)
+
+--make limiit(14 for email)
+
+--authenticate middelware 
+send err for post and others
+
+send login for get
+--spinner UI for upload
+
+
+
+var allTags = 
+["Administration",
+ "sample tag 2",
+ "sample tag 1",
+ "sample tag 1",
+ "sample tag 1",
+ "sample tag 1",
+ "sample tag 1",
+ "sample tag 1",
+ "sample tag 1",
+ "sample tag 1",]
+
+ 
+ [
+"ADMINISTRATION","FACULTY","COMMITIES","AWARDS AND HONORS","PRESS MEDIA","UNIVERSITY AND GOVT.APPROVAL","INFRASTRUTCURE","General Surgery"," General Medicine","Obstetrics and Gynecology"," Pulmonology",Dermatology"," Paediatrics"," Psychiatry"," Orthopedics"," Opthalmology"," E N T"," Anesthesiology"," Radiodiagnosis"," Hematology"," Dentistry"," Physiotherapy"," Clinical Biochemistry"," Clinical Pathology","Clinical Microbiology","Neurology"," Neurosurgery"," Pediatric Surgery"," Urology"," Nephrology"," Cardiology"," Plastic Surgery"" Gaestro Enterology", "Cardio theraic vascular","Medical Oncology","Surgical Oncology","Endocrinology","Course"," Admission"," Student Zone"," Conference/CME"," Upcoming Events"," Committee"," Training"," Journal Esi","List of publications for the Academic Year 2016-17"]

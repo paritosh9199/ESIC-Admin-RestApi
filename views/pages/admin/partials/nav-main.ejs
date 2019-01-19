@@ -52,9 +52,11 @@
                      </div>
                    </li> -->
                  <li class="nav-item dropdown">
-                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button"
+                   <a class="nav-link user-prof-email dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button"
                      aria-haspopup="true" aria-expanded="false">
                      <img class="user-avatar rounded-circle mr-2" src="https://avatars.dicebear.com/v2/identicon/<%= typeof user!='undefined'?user.email:'esicHyd'%>.svg" alt="User Avatar">
+                     <!-- <img class="user-avatar rounded-circle mr-2" src="images/web.png" alt="User Avatar"> -->
+                     
                      <span class="d-none d-md-inline-block"><%= typeof user!='undefined'? user.email+'   ':'Esic Admin'; %></span>
                      <span id="hidden"><%= typeof user!='undefined'?user._id:' ';%></span>
                    </a>

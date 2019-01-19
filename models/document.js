@@ -27,7 +27,7 @@ var DocumentSchema = new mongoose.Schema({
         trim: true,
         minlength: 1
     },
-    useTag: [{
+    tags: [{
         tag: {
             type: String
         }
@@ -69,24 +69,41 @@ DocumentSchema.methods.addTags = function (tags) {
     var doc = this;
     for(var i = 0; i<tags.length;i++){
         var tag = tags[i];
-        doc.useTag.push({ tag });
+        doc.tags.push({ tag });
     }
     return doc.save().then(() => {
         return doc;
     });
 };
 
+DocumentSchema.statics.addTagsById = function (id,tags,callback) {
+    var Doc = this;
+    Doc.findOne({
+        '_id': id,
+    }).then(function(doc){
+        for(var i = 0; i<tags.length;i++){
+            var tag = tags[i];
+            doc.tags.push({ tag });
+        }
+        doc.save().then(() => {
+            callback(doc)
+        });
+        // return doc;
+    });    
+};
+
+
 DocumentSchema.statics.findBySingleToken = function (tag) {
     var doc = this;
     return doc.findOne({
-        'useTag.tag': tag
+        'tags.tag': tag
     });
 };
 
 DocumentSchema.statics.findByMultipleToken = function (tags) {
     var doc = this;
-    return doc.finde({
-        useTag: { $all: tags }
+    return doc.find({
+        tags: { $all: tags }
     });
 };
 

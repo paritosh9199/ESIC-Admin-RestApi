@@ -37,18 +37,22 @@ app.use(session({
 
 
 app.get('/', function (req, res) {
-    res.redirect('/login');
+    res.redirect('/auth');
 });
 
 app.get('/login', function (req, res) {
 
     res.render('./pages/admin/login.ejs');
 });
+app.get('/auth', function (req, res) {
+
+    res.render('./pages/admin/auth.ejs');
+});
 app.get('/t', function (req, res) {
 
     res.render('./pages/admin/template.ejs');
 });
-app.get('/notification.manage', authenticate, function (req, res) {
+app.get('/notifications.manage', authenticate, function (req, res) {
 
     var usr = {
         "user": req.user
@@ -57,7 +61,7 @@ app.get('/notification.manage', authenticate, function (req, res) {
 
     res.render('./pages/admin/notfication.ejs', usr);
 });
-app.get('/notification.add', authenticate, function (req, res) {
+app.get('/notifications.add', authenticate, function (req, res) {
 
     var usr = {
         "user": req.user
@@ -66,6 +70,45 @@ app.get('/notification.add', authenticate, function (req, res) {
 
     res.render('./pages/admin/addNotif.ejs', usr);
 });
+app.get('/images.manage', authenticate, function (req, res) {
+
+    var usr = {
+        "user": req.user
+    }
+    // res.render('./pages/admin/login.ejs');
+
+    res.render('./pages/admin/images.ejs', usr);
+});
+app.get('/images.add', authenticate, function (req, res) {
+
+    var usr = {
+        "user": req.user
+    }
+    // res.render('./pages/admin/login.ejs');
+
+    res.render('./pages/admin/addImages.ejs', usr);
+});
+
+app.get('/documents.manage', authenticate, function (req, res) {
+
+    var usr = {
+        "user": req.user
+    }
+    // res.render('./pages/admin/login.ejs');
+
+    res.render('./pages/admin/documents.ejs', usr);
+});
+app.get('/documents.add', authenticate, function (req, res) {
+
+    var usr = {
+        "user": req.user
+    }
+    // res.render('./pages/admin/login.ejs');
+
+    res.render('./pages/admin/addDocuments.ejs', usr);
+});
+
+
 //POST getCount
 app.post('/getCount', function (req, res) {
     var imgCount = 0, docCount = 0, notifCount = 0;
@@ -103,18 +146,18 @@ const docStorage = multer.diskStorage({
 
 const imgUpload = multer({
     storage: imgStorage,
-    limits: { fileSize: 1000000 },
+    limits: { fileSize: 6291457 },
     fileFilter: function (req, file, cb) {
         checkFileType('img', file, cb);
     }
-}).single('myFeild');
+}).single('fileFeild');
 const docUpload = multer({
     storage: docStorage,
-    limits: { fileSize: 1000000 },
+    limits: { fileSize: 6291457 },
     fileFilter: function (req, file, cb) {
         checkFileType('doc', file, cb);
     }
-}).single('myFeild');
+}).single('fileFeild');
 
 // Check File Type
 
@@ -124,14 +167,17 @@ function checkFileType(type, file, cb) {
     if (type == 'img') {
         filetypes = /jpeg|jpg|png|gif/;
     } else if (type == 'doc') {
-        filetypes = /doc|docx|txt|pdf|md|json/;
+        filetypes = /doc|docx|txt|pdf|md/;
     } else {
         cb('Error: Invalid File');
     }
     // Check ext
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     // Check mime
-    const mimetype = filetypes.test(file.mimetype);
+   
+    var mimetype = filetypes.test(file.mimetype);
+    mimetype = true;
+    // console.log({extname,mimetype,mimetype:file.mimetype})
 
     if (mimetype && extname) {
         return cb(null, true);
@@ -151,18 +197,21 @@ app.post('/fileUpload/:type', (req, res) => {
         imgUpload(req, res, (err) => {
             console.log(req.file);
             if (err) {
-                res.render('./pages/admin/file', {
+                res.send({
+                    success:false,
                     msg: err,
                     type
                 });
             } else {
                 if (req.file == undefined) {
-                    res.render('./pages/admin/file', {
+                    res.send({
+                        success:false,
                         msg: 'Error: No File Selected!',
                         type
                     });
                 } else {
-                    var tags = ["tag1", "tag2"];
+                    // var tags = ["tag1", "tag2"];
+                    var tags  = _.pick(req.body, ['tags']);
                     var data = {
                         name: req.file.originalname,
                         type: req.file.mimetype,
@@ -171,8 +220,11 @@ app.post('/fileUpload/:type', (req, res) => {
                     }
                     var image = new Image(data);
                     image.save().then(function (data) {
+                        console.log(tags)
                         image.addTags(tags);
-                        res.render('./pages/admin/file', {
+                        res.send({
+                            id:data._id,
+                            success:true,
                             msg: 'File Uploaded!',
                             file: `/uploads/img/${req.file.filename}`,
                             type
@@ -185,16 +237,24 @@ app.post('/fileUpload/:type', (req, res) => {
     } else if (type == 'doc') {
         docUpload(req, res, (err) => {
             console.log(req.file);
+            console.log(req.document);
+            console.log(req.body);
+            console.log(req.body.tags);
+
+            console.log('//==========================================')
+            // console.log({req});
             if (err) {
-                res.render('./pages/admin/file', {
+                res.send({
                     msg: err,
-                    type
+                    type,
+                    success:false
                 });
             } else {
                 if (req.file == undefined) {
-                    res.render('./pages/admin/file', {
+                    res.send({
                         msg: 'Error: No File Selected!',
-                        type
+                        type,
+                        success:false
                     });
                 } else {
                     var data = {
@@ -205,8 +265,10 @@ app.post('/fileUpload/:type', (req, res) => {
                     }
                     var doc = new Document(data);
                     doc.save().then(function (data) {
-                        // docs.addTags(tags);
-                        res.render('./pages/admin/file', {
+                        // doc.addTags(tags);
+                        res.send({
+                            id:data._id,
+                            success:true,
                             msg: 'File Uploaded!',
                             file: `/uploads/doc/${req.file.filename}`,
                             type
@@ -220,6 +282,24 @@ app.post('/fileUpload/:type', (req, res) => {
         res.send('invalid');
     }
 });
+
+app.post('/addTagFile/:type', (req, res) => {
+    var type = req.params.type;
+    var id = req.body.id;
+    var tags = req.body.tags;
+    if (type == 'img') {
+        Image.addTagsById(id,tags,function(img){
+            res.status(200).send(img);
+        });
+    } else if (type == 'doc') {
+        Document.addTagsById(id,tags,function(doc){
+            res.status(200).send(doc);
+        });
+    } else {
+        res.send('invalid');
+    }
+});
+
 
 app.get('/fileRead/:type', function (req, res) {
     var type = req.params.type;
@@ -348,7 +428,7 @@ app.post('/login', (req, res) => {
             res.header('x-auth', token).send(user);
         });
     }).catch((e) => {
-        res.status(400).send();
+        res.status(400).send("Invalid login credentials");
     });
 });
 

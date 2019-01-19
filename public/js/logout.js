@@ -14,7 +14,7 @@ document.getElementById('logout-btn').addEventListener('click',function(){
             // alert(JSON.stringify({request,status,headers}));
             // console.log(headers.getResponseHeader('x-auth'));
             // console.log(request);
-            window.location.href = "/login";
+            window.location.href = "/auth";
         },
         error: function (request, textStatus, errorThrown) {
             alert(JSON.stringify(request));

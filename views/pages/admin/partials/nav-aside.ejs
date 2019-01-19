@@ -18,48 +18,50 @@
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link <%= typeof dash != 'undefined' ? 'active' : '' %>" href="/me">
-                    <i class="material-icons">edit</i>
+                    <i class="fas fa-chart-line"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <%= typeof notif != 'undefined' ? 'active' : '' %>" href="/notification.manage">
+                <a class="nav-link <%= typeof notif != 'undefined' ? 'active' : '' %>" href="/notifications.manage">
                     <!-- <i class="material-icons">vertical_split</i> -->
                     <i class="fas fa-bell"></i>
                     <span>Notifications</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <%= typeof newNotif != 'undefined' ? 'active' : '' %>" href="/notification.add">
-                    <i class="material-icons">note_add</i>
+                <a class="nav-link <%= typeof newNotif != 'undefined' ? 'active' : '' %>" href="/notifications.add">
+
+                    <i class="far fa-edit"></i>
                     <span>Add New Notification</span>
                 </a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link " href="components-blog-posts.html">
-                <i class="material-icons">vertical_split</i>
-                <i class="fas fa-bell"></i>
-                <span>Blog Posts</span>
-              </a>
+            <li class="nav-item">
+                <a class="nav-link <%= typeof docs != 'undefined' ? 'active' : '' %>" href="/documents.manage">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Documents</span>
+                </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="add-new-post.html">
-                <i class="material-icons">note_add</i>
-                <span>Add New Post</span>
-              </a>
+                <a class="nav-link <%= typeof newDocs != 'undefined' ? 'active' : '' %>" href="/documents.add">
+                    <!-- <i class="material-icons">note_add</i> -->                
+                    <i class="fas fa-file-signature"></i>
+                    <!-- <i class="fas fa-file-upload"></i> -->
+                    <span>Add New Document</span>
+                </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="form-components.html">
-                <i class="material-icons">view_module</i>
-                <span>Forms &amp; Components</span>
-              </a>
+                <a class="nav-link <%= typeof img != 'undefined' ? 'active' : '' %>" href="/images.manage">
+                    <i class="fas fa-images"></i>
+                    <span>Images</span>
+                </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="tables.html">
-                <i class="material-icons">table_chart</i>
-                <span>Tables</span>
-              </a>
-            </li> -->
+                <a class="nav-link <%= typeof newImg != 'undefined' ? 'active' : '' %>" href="/images.add">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Add New Image</span>
+                </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link " href="user-profile-lite.html">
                 <i class="material-icons">person</i>

@@ -34,7 +34,7 @@ var ImageSchema = new mongoose.Schema({
         trim: true,
         minlength: 1
     },
-    // useTag: [{
+    // tags: [{
     //     tag: {
     //         type: String,
     //         // required: true,
@@ -42,7 +42,7 @@ var ImageSchema = new mongoose.Schema({
     //     }
     // }],
 
-    useTag: [{
+    tags: [{
         tag: {
             type: String,
             // required: true
@@ -84,25 +84,43 @@ ImageSchema.methods.addTags = function (tags) {
     var image = this;
     for (var i = 0; i < tags.length; i++) {
         var tag = tags[i];
-        image.useTag.push({ tag });
+        image.tags.push({ tag });
     }
     return image.save().then(() => {
         return image;
     });
 };
 
+ImageSchema.statics.addTagsById = function (id,tags,callback) {
+    var Img = this;
+    Img.findOne({
+        '_id': id,
+    }).then(function(img){
+        for(var i = 0; i<tags.length;i++){
+            var tag = tags[i];
+            img.tags.push({ tag });
+        }
+        img.save().then(() => {
+            callback(img)
+        });
+        // return img;
+    });    
+};
+
+
+
 ImageSchema.statics.findBySingleToken = function (tag) {
     var image = this;
     return Image.findOne({
-        'useTag.tag': tag
+        'tags.tag': tag
     });
 };
 
 
 ImageSchema.statics.findByMultipleToken = function (tags) {
     var image = this;
-    return Image.finde({
-        useTag: { $all: tags }
+    return Image.find({
+        tags: { $all: tags }
     });
 };
 
@@ -116,8 +134,8 @@ ImageSchema.statics.findById = function (id) {
 
 ImageSchema.statics.getAllimage = function (callback) {
     var image = this;
-    image.find({}).then((docs) => {
-        callback(docs);
+    image.find({}).then((img) => {
+        callback(img);
     }, (err) => {
         console.log('Unable to fetch image', err);
         return err;

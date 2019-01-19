@@ -13,7 +13,6 @@
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
 
-  <link rel="stylesheet" href="css/addNotif.css">
 
 
 
@@ -31,6 +30,10 @@
       <!-- End Main Sidebar -->
       <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <% include ./partials/nav-main %>
+
+        <div id="top-alert">
+
+        </div>
         <!-- / .main-navbar -->
         <div class="main-content-container container-fluid px-4">
           <!-- Page Header -->
@@ -47,7 +50,7 @@
               <div class="card card-small mb-3">
                 <div class="card-body add-notif">
                   <form class="add-new-post">
-                    <div id="err-msg" ></div>
+                    <div id="err-msg"></div>
                     <!-- <input id="notif-title" class="form-control form-control-lg mb-3 add-notif-inp" type="text"
                       placeholder="Your Notification Title"> -->
                     <div id="editor-container" class="add-new-post__editor "></div>
@@ -73,11 +76,10 @@
                         <strong class="mr-1">Expiry Date:</strong>
                         <!-- <input type="date" name="date" id="date-exp" class="date-picker"> -->
 
-                        <div class="input-group"
-                          style="max-width: 350px;width:35px; height: 20px !important;">
+                        <div class="input-group" style="max-width: 350px;width:35px; height: 20px !important;">
                           <!-- input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0 -->
-                          <input id="exp-date" type="date" class="input-sm form-control" name="end">   
-                      </div>
+                          <input id="exp-date" type="date" class="input-sm form-control" name="end">
+                        </div>
 
                         <!-- <div class="input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0"
                           style="max-width: 350px;">
@@ -110,7 +112,7 @@
                       </span> -->
                     </li>
                     <li class="list-group-item d-flex px-3">
-                      <button id="clr-btn"class="btn btn-sm btn-outline-accent">
+                      <button id="clr-btn" class="btn btn-sm btn-outline-accent">
                         <i class="fas fa-eraser"></i> Clear</button>
                       <button id="pub-btn" class="btn btn-sm btn-accent ml-auto">
                         <i class="material-icons">file_copy</i> Publish</button>
@@ -121,130 +123,7 @@
               <!-- / Post Overview -->
               <!-- Post Overview -->
 
-              <!-- <div class='card card-small mb-3'>
-                <div class="card-header border-bottom">
-                  <h6 class="m-0">Categories</h6>
-                </div>
-                <div class='card-body p-0 '>
-                  <ul class="list-group list-group-flush ">
-                    <li class="list-group-item px-3 pb-2 long-tag-table">
 
-                      <div class="js-pscroll tags-module">
-
-
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category1" checked>
-                          <label class="custom-control-label" for="category1">Uncategorized</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category1" checked>
-                          <label class="custom-control-label" for="category1">Uncategorized</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category1">
-                          <label class="custom-control-label" for="category1">Uncategorized</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category1" checked>
-                          <label class="custom-control-label" for="category1">Uncategorized</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category2" checked>
-                          <label class="custom-control-label" for="category2">Design</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category3">
-                          <label class="custom-control-label" for="category3">Development</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category4">
-                          <label class="custom-control-label" for="category4">Writing</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category5">
-                          <label class="custom-control-label" for="category5">Books</label>
-                        </div>
-
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category2" checked>
-                          <label class="custom-control-label" for="category2">Design</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category3">
-                          <label class="custom-control-label" for="category3">Development</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category4">
-                          <label class="custom-control-label" for="category4">Writing</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category5">
-                          <label class="custom-control-label" for="category5">Books</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category2" checked>
-                          <label class="custom-control-label" for="category2">Design</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category3">
-                          <label class="custom-control-label" for="category3">Development</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category4">
-                          <label class="custom-control-label" for="category4">Writing</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category5">
-                          <label class="custom-control-label" for="category5">Books</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category2" checked>
-                          <label class="custom-control-label" for="category2">Design</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category3">
-                          <label class="custom-control-label" for="category3">Development</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category4">
-                          <label class="custom-control-label" for="category4">Writing</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category5">
-                          <label class="custom-control-label" for="category5">Books</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category2" checked>
-                          <label class="custom-control-label" for="category2">Design</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category3">
-                          <label class="custom-control-label" for="category3">Development</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category4">
-                          <label class="custom-control-label" for="category4">Writing</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category5">
-                          <label class="custom-control-label" for="category5">Books</label>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="list-group-item d-flex p-t-100 px-3">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="New category" aria-label="Add new category"
-                          aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                          <button class="btn btn-white px-2" type="button">
-                            <i class="material-icons">add</i>
-                          </button>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div> -->
 
               <!-- / Post Overview -->
             </div>

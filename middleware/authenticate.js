@@ -1,7 +1,7 @@
 var { User } = require('./../models/user');
 
 var authenticate = (req, res, next) => {
-    console.log('start auth');
+    // console.log('start auth');
 
     var token = req.header('x-auth');
     if (!token) {
@@ -10,7 +10,7 @@ var authenticate = (req, res, next) => {
     if (!token) {
         token = req.session.xAuth;
     }
-    console.log({"token":token});
+    // console.log({"token":token});
     User.findByToken(token).then((user) => {
         if (!user) {
             return Promise.reject();
@@ -21,7 +21,7 @@ var authenticate = (req, res, next) => {
         next();
     }).catch((e) => {
         // res.status(401).send();
-        res.redirect('/login');
+        res.redirect('/auth');
     });
 };
 

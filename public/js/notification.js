@@ -1,13 +1,11 @@
-
-
-
 function setNotif(notifs) {
+    changeUi();
     document.getElementById('table-body-tb').innerHTML = '';
     document.getElementById('modal-container').innerHTML = '';
     document.querySelector('.table100-head').innerHTML ='';
     if (notifs == '' || notifs == null) {
         document.getElementById('table-body-tb').innerHTML = `
-    <div class='info'>Create few notifications to view them here!</div>
+    <div class='info w-100'><center>Create few notifications to view them here!</center></div>
     `;
     } else {
         document.querySelector('.table100-head').innerHTML = `
@@ -99,7 +97,15 @@ function setNotif(notifs) {
 
 }
     
-
+function changeUi(i=1){
+    if(i==0){
+        document.getElementById('table-notif-display-setter').style.display = "none";
+        document.getElementById('spinner').style.display = "block";
+    }else{
+        document.getElementById('table-notif-display-setter').style.display = "block";
+        document.getElementById('spinner').style.display = "none";
+    }
+}
 
 function deleteNotif(id, n) {
     var data = {

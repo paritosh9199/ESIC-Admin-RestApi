@@ -36,6 +36,36 @@ var quill;
   });
 })(jQuery);
 
+function displayAlert(msg, type = 1) {
+
+  var showType;
+  var icon;
+  if (type == 1) {
+      showType = 'bg-primary';
+      icon = '<i class="fa fa-info mx-2"></i>';
+  } else if (type == 2) {
+      showType = 'bg-success';
+      icon = '<i class="fas fa-check"></i>';
+  } else if (type == 3) {
+      showType = 'bg-danger';
+      icon = '<i class="fas fa-times"></i>';
+  } else if (type == 4) {
+      showType = 'bg-warning';
+      icon = '<i class="fas fa-exclamation-triangle"></i>';
+  }
+  document.getElementById('top-alert').innerHTML = `
+  <div class="alert alert-accent ${showType} alert-dismissible fade show mb-0" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        ${icon}
+        ${msg}
+      
+  </div>
+  
+  `
+}
+
 
 function submitVal() {
   // var link = document.getElementById('notif-title').value;
@@ -52,8 +82,8 @@ function submitVal() {
     if (link != null && link != "" && ValidURL(link)) {
       if (expireOn > Date.now()) {
         document.getElementById("pub-btn").disabled = true; 
-        errmsg.innerHTML = "";
-        errmsg.classList.remove('m-b-3');
+        // errmsg.innerHTML = "";
+        // errmsg.classList.remove('m-b-3');
 
         var data = {
           content,
@@ -64,16 +94,19 @@ function submitVal() {
         saveNotif(data);
         clear();
       } else {
-        errmsg.innerHTML = "** Invalid Expiry Date";
-        errmsg.classList.add('m-b-3');
+        displayAlert('Please select the expiry date of notification alert! ( Note: The notification will expire after the selected date and will not be visible on the website)',4);
+        // errmsg.innerHTML = "** Invalid Expiry Date";
+        // errmsg.classList.add('m-b-3');
       }
     } else {
-      errmsg.innerHTML = "** Invalid Link";
-      errmsg.classList.add('m-b-3');
+      displayAlert('Please enter a valid link',4);
+      // errmsg.innerHTML = "** Invalid Link";
+      // errmsg.classList.add('m-b-3');
     }
   } else {
-    errmsg.innerHTML = "** Invalid Content";
-    errmsg.classList.add('m-b-3');
+    displayAlert('Please write some valid content',4)
+    // errmsg.innerHTML = "** Invalid Content";
+    // errmsg.classList.add('m-b-3');
   }
   
 
@@ -93,10 +126,12 @@ function saveNotif(data) {
     data: JSON.stringify(data),
     contentType: "application/json",
     success: function (request, status, headers) {
-      alert('Successfully created notification!');
+      // alert('Successfully created notification!');
+      displayAlert('Successfully created notification!',2);
     },
     error: function (request, textStatus, errorThrown) {
-      alert(JSON.stringify(request));
+      // alert(JSON.stringify(request));
+      displayAlert('Error encountered while creating notification! Please try again.',3)
     }
 
   });

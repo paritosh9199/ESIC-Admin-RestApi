@@ -14,6 +14,8 @@
  <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
 
  <link rel="stylesheet" href="css/table.css">
+ <link rel="stylesheet" href="css/spin.css">
+
 
 
 
@@ -83,7 +85,7 @@
            </table> -->
           </div>
 
-          <div class="table100-body js-pscroll">
+          <div class="table100-body js-pscroll" id="table-notif-display-setter">
            <table>
             <tbody id="table-body-tb">
 
@@ -100,6 +102,23 @@
             </tbody>
            </table>
           </div>
+
+          <div id="spinner" class="w-100">
+
+              <br><br><br><br><br>
+              <div id="spnnr-loder">
+                <!-- <div class=" js-preloader flex-center"> -->
+                <!-- UPLOADING -->
+                <div class="dots w-100">
+                  <div class="dot">i</div>
+                  <div class="dot">i</div>
+                  <div class="dot">i</div>
+                </div>
+                <!-- </div> -->
+              </div>
+              <br><br><br><br><br><br><br>
+            </div>
+            <script>document.getElementById("table-notif-display-setter").style.display = "none";</script>
          </div>
 
          <div id="modal-container">
