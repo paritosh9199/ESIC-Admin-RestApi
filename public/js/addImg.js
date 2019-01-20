@@ -3,8 +3,7 @@
 
 
 
-var setTags = [
-    "ADMINISTRATION", "FACULTY", "COMMITIES", "AWARDS AND HONORS", "PRESS MEDIA", "UNIVERSITY AND GOVT.APPROVAL", "INFRASTRUTCURE", "General Surgery", " General Medicine", "Obstetrics and Gynecology", " Pulmonology", "Dermatology", " Paediatrics", " Psychiatry", " Orthopedics", " Opthalmology", " E N T", " Anesthesiology", " Radiodiagnosis", " Hematology", " Dentistry", " Physiotherapy", " Clinical Biochemistry", " Clinical Pathology", "Clinical Microbiology", "Neurology", " Neurosurgery", " Pediatric Surgery", " Urology", " Nephrology", " Cardiology", " Plastic Surgery", " Gaestro Enterology", "Cardio theraic vascular", "Medical Oncology", "Surgical Oncology", "Endocrinology", "Course", " Admission", " Student Zone", " Conference/CME", " Upcoming Events", " Committee", " Training", " Journal Esi", "List of publications for the Academic Year 2016-17"];
+var setTags =  ["Administration","Faculty","Commities","Awards and honors","Press media","University and govt.approval","Infrastrutcure","General Surgery","General Medicine","Obstetrics and Gynecology","Pulmonology","Dermatology","Paediatrics","Psychiatry","Orthopedics","Opthalmology","E N T","Anesthesiology","Radiodiagnosis","Hematology","Dentistry","Physiotherapy","Clinical Biochemistry","Clinical Pathology","Clinical Microbiology","Neurology","Neurosurgery","Pediatric Surgery","Urology","Nephrology","Cardiology","Plastic Surgery","Gaestro Enterology","Cardio theraic vascular","Medical Oncology","Surgical Oncology","Endocrinology","Course","Admission","Student Zone","Conference/CME","Upcoming Events","Committee","Training","Journal Esi","Publication"];
 
 
 changeUi();
@@ -93,8 +92,8 @@ $("#upload-form").submit(function (e) {
         if (file.size < 6291457) {
             if (typeof tagValues !== 'undefined' && tagValues.length > 0) {
 
-
                 changeUi(1);
+                displayAlert('Please wait while we are Uploading your Image! Do not refresh this page until the upload has been comleted');
                 var formData = new FormData(this);
                 console.log(formData);
                 $.ajax({

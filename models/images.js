@@ -21,6 +21,12 @@ var ImageSchema = new mongoose.Schema({
         trim: true,
         minlength: 1
     },
+    size:{
+        type: Number,
+        required:true,
+        minlength:1,
+        trim:true
+    },
     createdOn: {
         type: Number,
         required: true,

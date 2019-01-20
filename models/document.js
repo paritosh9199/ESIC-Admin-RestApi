@@ -7,12 +7,25 @@ const { MongoClient, ObjectID } = require('mongodb');
 
 var DocumentSchema = new mongoose.Schema({
 
+    name: {
+        type: String,
+        required: true,
+        default: 'doc',
+        trim: true,
+        minlength: 1
+    },
     type: {
         type: String,
         required: true,
         default: 'doc',
         trim: true,
         minlength: 1
+    },
+    size:{
+        type: Number,
+        required:true,
+        minlength:1,
+        trim:true
     },
     createdOn: {
         type: Number,

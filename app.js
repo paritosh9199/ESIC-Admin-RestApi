@@ -42,7 +42,8 @@ app.get('/', function (req, res) {
 
 app.get('/login', function (req, res) {
 
-    res.render('./pages/admin/login.ejs');
+    res.redirect('/auth');
+    // res.render('./pages/admin/login.ejs');
 });
 app.get('/auth', function (req, res) {
 
@@ -215,6 +216,7 @@ app.post('/fileUpload/:type', (req, res) => {
                     var data = {
                         name: req.file.originalname,
                         type: req.file.mimetype,
+                        size:req.file.size,
                         createdOn: Date.now(),
                         path: `/uploads/img/${req.file.filename}`
                     }
@@ -237,9 +239,9 @@ app.post('/fileUpload/:type', (req, res) => {
     } else if (type == 'doc') {
         docUpload(req, res, (err) => {
             console.log(req.file);
-            console.log(req.document);
-            console.log(req.body);
-            console.log(req.body.tags);
+            // console.log(req.document);
+            // console.log(req.body);
+            // console.log(req.body.tags);
 
             console.log('//==========================================')
             // console.log({req});
@@ -260,6 +262,7 @@ app.post('/fileUpload/:type', (req, res) => {
                     var data = {
                         name: req.file.originalname,
                         type: req.file.mimetype,
+                        size:req.file.size,
                         createdOn: Date.now(),
                         path: `/uploads/doc/${req.file.filename}`
                     }
@@ -420,7 +423,7 @@ app.get('/me', authenticate, (req, res) => {
 
 app.post('/login', (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
-    console.log({ "body": req.body, "query": req.query });
+    // console.log({ "body": req.body, "query": req.query });
 
     User.findByCredentials(body.email, body.password).then((user) => {
         return user.generateAuthToken().then((token) => {
