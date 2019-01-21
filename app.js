@@ -40,6 +40,12 @@ app.get('/', function (req, res) {
     res.redirect('/auth');
 });
 
+
+app.get('/mobile', function (req, res) {
+    res.render('./pages/admin/mobile.ejs');
+});
+
+
 app.get('/login', function (req, res) {
 
     res.redirect('/auth');
