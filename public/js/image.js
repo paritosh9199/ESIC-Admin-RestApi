@@ -43,7 +43,7 @@ function setImages(images) {
             <thead>
              <tr class="row100 head">
               <th class="cell100 column1"></th>
-              <th class="cell100 column2">Name</th>
+              <th class="cell100 column2">Images</th>
               <th class="cell100 column3">Size</th>
               <th class="cell100 column4">Uploaded On</th>
               <th class="cell100 column5">Actions</th>
@@ -58,7 +58,7 @@ function setImages(images) {
                       <td class="cell100 column1 p-l-10">
                       ${i + 1}.
                       </td>
-                      <td class="cell100 column2">${(img.name)}</td>
+                      <td class="cell100 column2"><img src="${img.path}" class="image-thumbnail"alt="Image" title="${img.name}"><span class="hidden">${(img.name)}</span></td>
                       <td class="cell100 column3">${formatBytes(img.size)}</td>
                       <td class="cell100 column4">${timeConverter(img.createdOn)}</td>
                       <td class="cell100 column5 p-r-10 center-align">
@@ -74,7 +74,7 @@ function setImages(images) {
                         <a href="${img.path}" target="_blank" type="button" class="btn btn-white active-light" download="${img.name}">
     
                         <i class="fas fa-download"></i>
-    
+     
                         </a>
 
                         <a href="${img.path}" target="_blank" type="button" class="btn btn-white active-light">
