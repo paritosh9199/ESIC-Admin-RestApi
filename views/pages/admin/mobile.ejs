@@ -17,7 +17,7 @@
             background: rgb(211, 211, 211);
         }
 
-        .center-text{
+        .center-text {
             text-align: center;
             margin-top: 30vh;
             /* color:black; */
@@ -29,11 +29,22 @@
 
     <div class="container">
         <div class="center-text">
-            <h5>This site is not compatible with the browser you are using! <br>Please use Desktop browsers to visit this site!</h5>
+
+            <h5>This site is not compatible with the browser you are using! <br>Please use Desktop browsers to visit
+                this site!</h5>
+            <p>You are using:
+                <span id="browser-display">
+
+                </span>
+            </p>
         </div>
     </div>
 
     <script src="vendor/bootstrap/js/bootstrap.js"></script>
+    <script>
+        var browser = (navigator.userAgent || navigator.vendor || window.opera);
+        document.getElementById('browser-display').innerHTML = browser;
+    </script>
 
 </body>
 
