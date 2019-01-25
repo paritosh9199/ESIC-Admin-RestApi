@@ -73,16 +73,22 @@ var tagValues = [];
 $("#inputGroupFileAddon03").on("click", function () {
     //get the file name
     var fileName = "Choose a file";
-    document.getElementById('fl-nm').innerHTML = "-";
-    document.getElementById('fl-sz').innerHTML = "-";
-    document.getElementById('fl-tg').innerHTML = "-";
-    getCheckedCheckboxesFor('tags', 1);
-    tagValues = [];
+    clearVals();
     //replace the "Choose a file" label
     $("#inputGroupFile03")
         .next(".custom-file-label")
         .html(fileName);
 });
+
+function clearVals(){
+    
+    document.getElementById('fl-nm').innerHTML = "Image File not selected";
+    document.getElementById('fl-sz').innerHTML = "-";
+    document.getElementById('fl-tg').innerHTML = "-";
+    getCheckedCheckboxesFor('tags', 1);
+    tagValues = [];
+}
+
 
 $("#upload-form").submit(function (e) {
     e.preventDefault();
@@ -122,7 +128,7 @@ $("#upload-form").submit(function (e) {
                             success: function (request, status, headers) {
                                 
                                 displayAlert('Successfully Uploded file!', 2);
-
+                                clearVals();
                                 changeUi();
                             },
                             error: function (request, textStatus, errorThrown) {

@@ -106,14 +106,14 @@ DocumentSchema.statics.addTagsById = function (id,tags,callback) {
 };
 
 
-DocumentSchema.statics.findBySingleToken = function (tag) {
+DocumentSchema.statics.findBySingleTag = function (tag) {
     var doc = this;
     return doc.findOne({
         'tags.tag': tag
     });
 };
 
-DocumentSchema.statics.findByMultipleToken = function (tags) {
+DocumentSchema.statics.findByMultipleTags = function (tags) {
     var doc = this;
     return doc.find({
         tags: { $all: tags }

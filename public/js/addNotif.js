@@ -4,6 +4,10 @@
  |--------------------------------------------------------------------------
  */
 
+ 
+document.getElementById('exp-date').value = timeConverter(Date.now());
+
+
 'use strict';
 var quill;
 (function ($) {
@@ -152,7 +156,7 @@ function ValidURL(str) {
 function clear() {
   quill.setContents([{ insert: '\n' }]);
   document.getElementById('link-inp-notif').value = "";
-  document.getElementById('exp-date').value = "mm/dd/yyyy";
+  document.getElementById('exp-date').value = timeConverter(Date.now());
 }
 
 document.getElementById('pub-btn').addEventListener('click', function () {
@@ -161,4 +165,18 @@ document.getElementById('pub-btn').addEventListener('click', function () {
 document.getElementById('clr-btn').addEventListener('click', function () {
   document.getElementById("pub-btn").disabled = false;
   clear();
-})
+});
+
+function timeConverter(UNIX_timestamp) {
+  var a = new Date(UNIX_timestamp);
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var year = a.getFullYear();
+  var month = a.getMonth()+1;
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+  var smallTime = month + '/' + date + '/' + year;
+  return smallTime;
+}

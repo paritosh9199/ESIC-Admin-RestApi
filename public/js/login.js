@@ -1,10 +1,10 @@
-(function($) {
+(function ($) {
   "use strict";
 
   /*==================================================================
     [ Focus input ]*/
-  $(".input100").each(function() {
-    $(this).on("blur", function() {
+  $(".input100").each(function () {
+    $(this).on("blur", function () {
       if (
         $(this)
           .val()
@@ -21,7 +21,7 @@
     [ Validate ]*/
   var input = $(".validate-input .input100");
 
-  $(".validate-form").on("submit", function() {
+  $(".validate-form").on("submit", function () {
     var check = true;
 
     for (var i = 0; i < input.length; i++) {
@@ -34,8 +34,8 @@
     return check;
   });
 
-  $(".validate-form .input100").each(function() {
-    $(this).focus(function() {
+  $(".validate-form .input100").each(function () {
+    $(this).focus(function () {
       hideValidate(this);
     });
   });
@@ -78,7 +78,7 @@
   /*==================================================================
     [ Show pass ]*/
   var showPass = 0;
-  $(".btn-show-pass").on("click", function() {
+  $(".btn-show-pass").on("click", function () {
     if (showPass == 0) {
       $(this)
         .next("input")
@@ -121,15 +121,15 @@ function login(email, password) {
     url: "/login",
     data: JSON.stringify(data),
     contentType: "application/json",
-    success: function(request, status, headers) {
+    success: function (request, status, headers) {
       // alert(JSON.stringify({request,status,headers}));
       // console.log(headers.getResponseHeader('x-auth'));
       // console.log(request);
       window.location.href = "/me";
     },
-    error: function(request, textStatus, errorThrown) {
-    //   console.log({ request, textStatus, errorThrown });
-    //   alert(JSON.stringify({ request, textStatus, errorThrown }));
+    error: function (request, textStatus, errorThrown) {
+      //   console.log({ request, textStatus, errorThrown });
+      //   alert(JSON.stringify({ request, textStatus, errorThrown }));
       errLgn.innerHTML = `<span class='err-msg'>**${errValidation(
         request.responseText
       )}</span>`;
@@ -148,13 +148,13 @@ function register(email, password) {
     url: "/register",
     data: JSON.stringify(data),
     contentType: "application/json",
-    success: function(request, status, headers) {
+    success: function (request, status, headers) {
       // alert(JSON.stringify({request,status,headers}));
       // console.log(headers.getResponseHeader('x-auth'));
       // console.log(request);
       window.location.href = "/me";
     },
-    error: function(request, textStatus, errorThrown) {
+    error: function (request, textStatus, errorThrown) {
       //   alert(JSON.stringify({ request, textStatus, errorThrown }));
       //   console.log({ request, textStatus, errorThrown });
       errReg.innerHTML = `<span class='err-msg'>**${errValidation(
@@ -183,7 +183,7 @@ function _(id) {
   return document.getElementById(id);
 }
 
-document.getElementById("login-btn").addEventListener("click", function() {
+document.getElementById("login-btn").addEventListener("click", function () {
   var email = _("email-usr").value;
   var password = _("passwd-usr").value;
   if (email != null && email != "" && validateEmail(email)) {
@@ -197,7 +197,7 @@ document.getElementById("login-btn").addEventListener("click", function() {
   }
 });
 
-document.getElementById("reg-btn").addEventListener("click", function() {
+document.getElementById("reg-btn").addEventListener("click", function () {
   var email = _("email-reg").value;
   var password = _("passwd-reg").value;
   var confPass = _("conf-reg").value;
@@ -205,8 +205,12 @@ document.getElementById("reg-btn").addEventListener("click", function() {
     if (password != null && password != "") {
       if (confPass != null && confPass != "") {
         if (confPass == password) {
-        //   console.log({ email, password, confPass });
-          register(email, password);
+          if (password.length > 6) {
+            register(email, password);
+          } else {
+            errReg.innerHTML = `<span class='err-msg'>**Password too small! Please choose a bigger password</span>`;
+            //   console.log({ email, password, confPass });
+          }
         } else {
           errReg.innerHTML = `<span class='err-msg'>**Passwords do not match</span>`;
         }

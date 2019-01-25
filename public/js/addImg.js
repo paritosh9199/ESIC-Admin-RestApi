@@ -72,16 +72,21 @@ var tagValues = [];
 $("#inputGroupFileAddon03").on("click", function () {
     //get the file name
     var fileName = "Choose an image";
-    document.getElementById('fl-nm').innerHTML = "-";
-    document.getElementById('fl-sz').innerHTML = "-";
-    document.getElementById('fl-tg').innerHTML = "-";
-    getCheckedCheckboxesFor('tags', 1);
-    tagValues = [];
+    clearVals();
     //replace the "Choose a file" label
     $("#inputGroupFile03")
         .next(".custom-file-label")
         .html(fileName);
 });
+
+function clearVals(){
+    
+    document.getElementById('fl-nm').innerHTML = "Image File not selected";
+    document.getElementById('fl-sz').innerHTML = "-";
+    document.getElementById('fl-tg').innerHTML = "-";
+    getCheckedCheckboxesFor('tags', 1);
+    tagValues = [];
+}
 
 $("#upload-form").submit(function (e) {
     e.preventDefault();
@@ -93,7 +98,7 @@ $("#upload-form").submit(function (e) {
             if (typeof tagValues !== 'undefined' && tagValues.length > 0) {
 
                 changeUi(1);
-                displayAlert('Please wait while we are Uploading your Image! Do not refresh this page until the upload has been comleted');
+                displayAlert('Please wait while we are Uploading your Image! Do not refresh this page until the upload has been completed');
                 var formData = new FormData(this);
                 console.log(formData);
                 $.ajax({
@@ -119,7 +124,7 @@ $("#upload-form").submit(function (e) {
                             success: function (request, status, headers) {
                                 
                                 displayAlert('Successfully Uploded Image!', 2);
-
+                                clearVals();
                                 changeUi();
                             },
                             error: function (request, textStatus, errorThrown) {
@@ -144,7 +149,7 @@ $("#upload-form").submit(function (e) {
                 displayAlert('Select a tag for the image', 4);
             }
         } else {
-            displayAlert('image size is too large! Please select a smaller image', 4)
+            displayAlert('image size is too large! Please select an image with size less than 6MB', 4)
         }
     } else {
         displayAlert('Please select a valid image', 4)

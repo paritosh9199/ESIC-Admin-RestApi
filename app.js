@@ -7,6 +7,7 @@ const { ObjectID } = require('mongodb');
 const multer = require('multer');
 const path = require('path');
 
+var cors = require('cors');
 var session = require('express-session');
 var fs = require('fs');
 var { mongoose } = require('./db/mongoose');
@@ -17,11 +18,24 @@ var { Image } = require('./models/images');
 var { Document } = require('./models/document');
 var { authenticate } = require('./middleware/authenticate');
 
+var whitelist = ['http://esichyd.herokuapp.com/', 'http://localhost:5000/*']
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    optionsSuccessStatus: 200
+}
+
 var app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
+// app.use(cors());
+// cors(corsOptions)
 app.use(express.static(__dirname + '/public'));
 
 app.set('views', __dirname + '/views');
@@ -181,7 +195,7 @@ function checkFileType(type, file, cb) {
     // Check ext
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     // Check mime
-   
+
     var mimetype = filetypes.test(file.mimetype);
     mimetype = true;
     // console.log({extname,mimetype,mimetype:file.mimetype})
@@ -205,24 +219,24 @@ app.post('/fileUpload/:type', (req, res) => {
             console.log(req.file);
             if (err) {
                 res.send({
-                    success:false,
+                    success: false,
                     msg: err,
                     type
                 });
             } else {
                 if (req.file == undefined) {
                     res.send({
-                        success:false,
+                        success: false,
                         msg: 'Error: No File Selected!',
                         type
                     });
                 } else {
                     // var tags = ["tag1", "tag2"];
-                    var tags  = _.pick(req.body, ['tags']);
+                    var tags = _.pick(req.body, ['tags']);
                     var data = {
                         name: req.file.originalname,
                         type: req.file.mimetype,
-                        size:req.file.size,
+                        size: req.file.size,
                         createdOn: Date.now(),
                         path: `/uploads/img/${req.file.filename}`
                     }
@@ -231,8 +245,8 @@ app.post('/fileUpload/:type', (req, res) => {
                         console.log(tags)
                         image.addTags(tags);
                         res.send({
-                            id:data._id,
-                            success:true,
+                            id: data._id,
+                            success: true,
                             msg: 'File Uploaded!',
                             file: `/uploads/img/${req.file.filename}`,
                             type
@@ -255,20 +269,20 @@ app.post('/fileUpload/:type', (req, res) => {
                 res.send({
                     msg: err,
                     type,
-                    success:false
+                    success: false
                 });
             } else {
                 if (req.file == undefined) {
                     res.send({
                         msg: 'Error: No File Selected!',
                         type,
-                        success:false
+                        success: false
                     });
                 } else {
                     var data = {
                         name: req.file.originalname,
                         type: req.file.mimetype,
-                        size:req.file.size,
+                        size: req.file.size,
                         createdOn: Date.now(),
                         path: `/uploads/doc/${req.file.filename}`
                     }
@@ -276,8 +290,8 @@ app.post('/fileUpload/:type', (req, res) => {
                     doc.save().then(function (data) {
                         // doc.addTags(tags);
                         res.send({
-                            id:data._id,
-                            success:true,
+                            id: data._id,
+                            success: true,
                             msg: 'File Uploaded!',
                             file: `/uploads/doc/${req.file.filename}`,
                             type
@@ -297,11 +311,11 @@ app.post('/addTagFile/:type', (req, res) => {
     var id = req.body.id;
     var tags = req.body.tags;
     if (type == 'img') {
-        Image.addTagsById(id,tags,function(img){
+        Image.addTagsById(id, tags, function (img) {
             res.status(200).send(img);
         });
     } else if (type == 'doc') {
-        Document.addTagsById(id,tags,function(doc){
+        Document.addTagsById(id, tags, function (doc) {
             res.status(200).send(doc);
         });
     } else {
@@ -310,7 +324,7 @@ app.post('/addTagFile/:type', (req, res) => {
 });
 
 
-app.get('/fileRead/:type', function (req, res) {
+app.get('/fileRead/:type',cors(), function (req, res) {
     var type = req.params.type;
     var id = req.body.id;
     if (type == 'img') {
@@ -336,14 +350,43 @@ app.get('/fileRead/:type', function (req, res) {
     }
 });
 
+app.get('/getFileByTag/:type/:tag',cors(), function () {
+    var type = req.params.type;
+    var id = req.body.id;
+    if (type == 'img') {
+        // Image.getAllimage(function (img) {
+        //     try {
+        //         res.status(200).send(img);
+        //     } catch (e) {
+        //         res.status(400).send(e);
+        //     }
+        // });
+    } else if (type == 'doc') {
+        // Document.getAlldoc(function (doc) {
+        //     try {
+        //         res.status(200).send(doc);
+        //     } catch (e) {
+        //         res.status(400).send(e);
+        //     }
+        // });
+    } else if (type == 'vid') {
+        // res.send('vid');
+    } else {
+        // res.send('invalid');
+    }
+})
 app.post('/fileDelete/:type', function (req, res) {
     var type = req.params.type;
     var id = req.body.id;
     if (type == 'img') {
         Image.deleteByID(id, function (docs) {
             try {
-                // fs.unlink(docs.path);
-                res.status(200).send(docs);
+                fs.unlink('./public' + docs.path, function (err) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    res.status(200).send(docs);
+                });
             } catch (error) {
                 console.log(error)
                 res.status(400).send(error);
@@ -352,8 +395,14 @@ app.post('/fileDelete/:type', function (req, res) {
     } else if (type == 'doc') {
         Document.deleteByID(id, function (docs) {
             try {
-                // fs.unlink(docs.path);
-                res.status(200).send(docs);
+                fs.unlink('./public' + docs.path, function (err) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    res.status(200).send(docs);
+                });
+                // console.log(docs.path);
+
             } catch (error) {
                 console.log(error)
                 res.status(400).send(error);
@@ -372,7 +421,7 @@ app.post('/fileDelete/:type', function (req, res) {
 app.post('/createNotif', authenticate, function (req, res) {
 
     var body = _.pick(req.body, ['content', 'link', 'expireOn']);
-    var notif = new Notification(body);    
+    var notif = new Notification(body);
     notif.save().then(() => {
         res.send({ success: true });
     }).catch((e) => {
@@ -393,7 +442,7 @@ app.post('/deleteNotif', authenticate, function (req, res) {
     });
 })
 
-app.get('/readNotif', function (req, res) {
+app.get('/readNotif',cors(), function (req, res) {
     Notification.getAllNotification(function (docs) {
         try {
             res.status(200).send(docs);

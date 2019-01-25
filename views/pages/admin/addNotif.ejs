@@ -163,7 +163,14 @@
 
   <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <script>
-    $('.datepicker').datepicker();
+    // $(".datepicker").datepicker("setDate", new Date());
+    $('.datepicker').datepicker({
+      // setDate: new Date(),
+      format:'mm/dd/yyyy',
+      autoclose: true,
+      defaultDate:'now'
+    });
+    // $('.datepicker').datepicker('update', new Date());
     $('.js-pscroll').each(function () {
       var ps = new PerfectScrollbar(this);
 
