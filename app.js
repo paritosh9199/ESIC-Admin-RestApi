@@ -383,7 +383,8 @@ app.post('/fileDelete/:type', function (req, res) {
             try {
                 fs.unlink('./public' + docs.path, function (err) {
                     if (err) {
-                        return console.error(err);
+                        console.error(err);
+                        res.status(500).send({success:false});
                     }
                     res.status(200).send(docs);
                 });
@@ -397,7 +398,8 @@ app.post('/fileDelete/:type', function (req, res) {
             try {
                 fs.unlink('./public' + docs.path, function (err) {
                     if (err) {
-                        return console.error(err);
+                        console.error(err);
+                        res.status(500).send({success:false});
                     }
                     res.status(200).send(docs);
                 });
