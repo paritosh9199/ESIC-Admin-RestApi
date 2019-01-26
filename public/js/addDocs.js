@@ -3,8 +3,29 @@
 
 
 
-var setTags =  ["Administration","Faculty","Commities","Awards and honors","Press media","University and govt.approval","Infrastrutcure","General Surgery","General Medicine","Obstetrics and Gynecology","Pulmonology","Dermatology","Paediatrics","Psychiatry","Orthopedics","Opthalmology","E N T","Anesthesiology","Radiodiagnosis","Hematology","Dentistry","Physiotherapy","Clinical Biochemistry","Clinical Pathology","Clinical Microbiology","Neurology","Neurosurgery","Pediatric Surgery","Urology","Nephrology","Cardiology","Plastic Surgery","Gaestro Enterology","Cardio theraic vascular","Medical Oncology","Surgical Oncology","Endocrinology","Course","Admission","Student Zone","Conference/CME","Upcoming Events","Committee","Training","Journal Esi","Publication"];
-
+var setTags =  [
+    "PressMedia",
+    "AnnualReport",
+    "University",
+    "Admission",
+    "Courses",
+    "StudentZone",
+    "Conference",
+    "Training",
+    "JournalESI",
+    "Research",
+    "CitizenCharter",
+    "BodyDonation",
+    "RulesRegulation",
+    "BioWasteManagement",
+    "RTI",
+    "Admission",
+    "University",
+    "Awards",
+    "Infrastrutcure",
+    "Events",
+    "Publication",
+]
 
 changeUi();
 var inputElement = document.getElementById("inputGroupFile03");

@@ -108,7 +108,7 @@ DocumentSchema.statics.addTagsById = function (id,tags,callback) {
 
 DocumentSchema.statics.findBySingleTag = function (tag) {
     var doc = this;
-    return doc.findOne({
+    return doc.find({
         'tags.tag': tag
     });
 };

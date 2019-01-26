@@ -115,15 +115,15 @@ ImageSchema.statics.addTagsById = function (id,tags,callback) {
 
 
 
-ImageSchema.statics.findBySingleToken = function (tag) {
+ImageSchema.statics.findBySingleTag = function (tag) {
     var image = this;
-    return Image.findOne({
+    return Image.find({
         'tags.tag': tag
     });
 };
 
 
-ImageSchema.statics.findByMultipleToken = function (tags) {
+ImageSchema.statics.findByMultipleTag = function (tags) {
     var image = this;
     return Image.find({
         tags: { $all: tags }

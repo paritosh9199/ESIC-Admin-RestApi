@@ -324,7 +324,7 @@ app.post('/addTagFile/:type', (req, res) => {
 });
 
 
-app.get('/fileRead/:type',cors(), function (req, res) {
+app.get('/fileRead/:type', cors(), function (req, res) {
     var type = req.params.type;
     var id = req.body.id;
     if (type == 'img') {
@@ -350,29 +350,46 @@ app.get('/fileRead/:type',cors(), function (req, res) {
     }
 });
 
-app.get('/getFileByTag/:type/:tag',cors(), function () {
+app.get('/getFileByTag/:type/:tag', cors(), function (req, res) {
     var type = req.params.type;
+    var tag = req.params.tag;
     var id = req.body.id;
     if (type == 'img') {
-        // Image.getAllimage(function (img) {
-        //     try {
-        //         res.status(200).send(img);
-        //     } catch (e) {
-        //         res.status(400).send(e);
-        //     }
-        // });
+        if (tag != "" && tag != null && tag != 'all') {
+            Image.findBySingleTag(tag).then(function (data) {
+                var obj = {
+                    dataObj: data,
+                    type: 'img'
+                };
+                res.status(200).send(obj);
+            })
+        } else if (tag == 'all' || tag == ""){
+            Image.getAllimage(function (img) {
+                try {
+                    var obj = {
+                        dataObj: img,
+                        type: 'img'
+                    };
+                    res.status(200).send(obj);
+                } catch (e) {
+                    res.status(400).send(e);
+                }
+            });
+        }
     } else if (type == 'doc') {
-        // Document.getAlldoc(function (doc) {
-        //     try {
-        //         res.status(200).send(doc);
-        //     } catch (e) {
-        //         res.status(400).send(e);
-        //     }
-        // });
+        if (tag != "" && tag != null) {
+            Document.findBySingleTag(tag).then(function (data) {
+                var obj = {
+                    dataObj: data,
+                    type: 'doc'
+                };
+                res.status(200).send(obj);
+            })
+        }
     } else if (type == 'vid') {
         // res.send('vid');
     } else {
-        // res.send('invalid');
+        res.send('invalid');
     }
 })
 app.post('/fileDelete/:type', function (req, res) {
@@ -384,7 +401,7 @@ app.post('/fileDelete/:type', function (req, res) {
                 fs.unlink('./public' + docs.path, function (err) {
                     if (err) {
                         console.error(err);
-                        res.status(500).send({success:false});
+                        res.status(500).send({ success: false });
                     }
                     res.status(200).send(docs);
                 });
@@ -399,7 +416,7 @@ app.post('/fileDelete/:type', function (req, res) {
                 fs.unlink('./public' + docs.path, function (err) {
                     if (err) {
                         console.error(err);
-                        res.status(500).send({success:false});
+                        res.status(500).send({ success: false });
                     }
                     res.status(200).send(docs);
                 });
@@ -444,7 +461,7 @@ app.post('/deleteNotif', authenticate, function (req, res) {
     });
 })
 
-app.get('/readNotif',cors(), function (req, res) {
+app.get('/readNotif', cors(), function (req, res) {
     Notification.getAllNotification(function (docs) {
         try {
             res.status(200).send(docs);
