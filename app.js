@@ -439,7 +439,7 @@ app.post('/fileDelete/:type', function (req, res) {
 //POST notif
 app.post('/createNotif', authenticate, function (req, res) {
 
-    var body = _.pick(req.body, ['content', 'link', 'expireOn']);
+    var body = _.pick(req.body, ['content', 'link', 'expireOn','contentType']);
     var notif = new Notification(body);
     notif.save().then(() => {
         res.send({ success: true });

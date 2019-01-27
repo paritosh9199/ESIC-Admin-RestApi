@@ -34,7 +34,7 @@ function setNotif(notifs) {
     document.querySelector('.table100-head').innerHTML ='';
     if (notifs == '' || notifs == null) {
         document.getElementById('table-body-tb').innerHTML = `
-    <div class='info w-100'><center>Create few notifications to view them here!</center></div>
+    <div class='info w-100'><center>Create few notifications/events to view them here!</center></div>
     `;
     } else {
         document.querySelector('.table100-head').innerHTML = `
@@ -76,6 +76,7 @@ function setNotif(notifs) {
                         </a>
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-del-${i + 1}">
                         <span id="notif-id-${i + 1}" class="hidden notif-id">${notif._id}</span>
+                        <span id="notif-content-${i + 1}" class="hidden notif-contentType">${notif.contentType}</span>
                          <i class="material-icons"></i>
                         </button>
                         

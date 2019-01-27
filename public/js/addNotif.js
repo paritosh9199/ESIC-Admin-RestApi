@@ -9,7 +9,7 @@ document.getElementById('exp-date').value = timeConverter(Date.now());
 
 
 'use strict';
-var quill;
+var quill,alertContent = 'notif';
 (function ($) {
   $(document).ready(function () {
 
@@ -92,13 +92,14 @@ function submitVal() {
         var data = {
           content,
           link,
-          expireOn
+          expireOn,
+          contentType: alertContent
         }
 
         saveNotif(data);
         clear();
       } else {
-        displayAlert('Please select the expiry date of notification alert! ( Note: The notification will expire after the selected date and will not be visible on the website)', 4);
+        displayAlert('Please select the expiry date of alert! ( Note: The alert will expire after the selected date and will not be visible on the website)', 4);
         // errmsg.innerHTML = "** Invalid Expiry Date";
         // errmsg.classList.add('m-b-3');
       }
@@ -120,6 +121,7 @@ function submitVal() {
 function saveNotif(data) {
   var dt = {
     "content": data.content,
+    "contentType":data.contentType,
     "link": data.link,
     "expireOn": data.expireOn
   }
@@ -133,11 +135,11 @@ function saveNotif(data) {
       // alert('Successfully created notification!');
       document.getElementById("pub-btn").disabled = false;
 
-      displayAlert('Successfully created notification!', 2);
+      displayAlert('Successfully created Alert!', 2);
     },
     error: function (request, textStatus, errorThrown) {
       // alert(JSON.stringify(request));
-      displayAlert('Error encountered while creating notification! Please try again.', 3)
+      displayAlert('Error encountered while creating alert! Please try again.', 3)
     }
 
   });
@@ -154,6 +156,10 @@ function ValidURL(str) {
 }
 
 function clear() {
+  document.getElementById("pub-btn").disabled = false;
+  document.getElementById('notif-check-radio').checked = true;
+  document.getElementById('event-check-radio').checked = false;
+  alertContent = 'notif';
   quill.setContents([{ insert: '\n' }]);
   document.getElementById('link-inp-notif').value = "";
   document.getElementById('exp-date').value = timeConverter(Date.now());
@@ -162,8 +168,18 @@ function clear() {
 document.getElementById('pub-btn').addEventListener('click', function () {
   submitVal();
 });
+document.getElementById('notif-check-radio').addEventListener('click', function () {
+  alertContent = 'notif';
+
+  document.getElementById('event-check-radio').checked = false;
+});
+document.getElementById('event-check-radio').addEventListener('click', function () {
+  alertContent = 'event';
+
+  document.getElementById('notif-check-radio').checked = false;
+});
 document.getElementById('clr-btn').addEventListener('click', function () {
-  document.getElementById("pub-btn").disabled = false;
+  
   clear();
 });
 

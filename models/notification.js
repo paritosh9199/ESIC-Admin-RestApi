@@ -13,6 +13,13 @@ var NotificationSchema = new mongoose.Schema({
         trim: true,
         minlength: 1
     },
+    contentType:{
+        type:String,
+        required:true,
+        trim:true,
+        default:'notif',
+        minlength:5
+    },
     createdOn: {
         type: Number,
         required: true,

@@ -48,7 +48,7 @@
           <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
               <span class="text-uppercase page-subtitle">Notification Dashboard</span>
-              <h3 class="page-title">Add New Notification</h3>
+              <h3 class="page-title">Add New Notification/Event</h3>
             </div>
           </div>
           <!-- End Page Header -->
@@ -82,24 +82,7 @@
                       <span class="d-flex mb-2">
                         <i class="far fa-calendar-alt mr-1 mt-1"></i>
                         <strong class="mr-1">Expiry Date:</strong>
-                        <!-- <input type="date" name="date" id="date-exp" class="date-picker"> -->
 
-
-
-                        <!-- <div class="input-group">
-                            <input type="text" class="form-control datepicker" aria-label="datePick" aria-describedby="basic-addon1">
-                        </div> -->
-
-                        <!-- <div class="input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0"
-                          style="max-width: 350px;">
-                           <input type="date" class="input-sm form-control" name="start" placeholder="Start Date" id="blog-overview-date-range-1"> 
-                          <input id="exp-date" type="date" class="input-sm form-control" name="end">
-                          <span class="input-group-append">
-                            <span class="input-group-text">
-                              <i class="material-icons"></i>
-                            </span>
-                          </span>
-                        </div> -->
 
 
                       </span>
@@ -108,22 +91,24 @@
                         <!-- <input  type="text" class="input-lg form-control datepicker"> -->
                         <input id="exp-date" type="text" value="mm/dd/yyyy" class="form-control form-control-sm input-group-sm input-sm datepicker">
                       </div>
-                      <!-- <span class="d-flex mb-2">
-                        <i class="material-icons mr-1">visibility</i>
-                        <strong class="mr-1">Visibility:</strong>
-                        <strong class="text-success">Public</strong>
-                        <a class="ml-auto" href="#">Edit</a>
-                      </span>
+
+                    </li>
+
+                    <li class="list-group-item p-3">
                       <span class="d-flex mb-2">
-                        <i class="material-icons mr-1">calendar_today</i>
-                        <strong class="mr-1">Schedule:</strong> Now
-                        <a class="ml-auto" href="#">Edit</a>
+                        <i class="fas fa-tools mr-1 mt-1"></i>
+                        <strong class="mr-1">Type:</strong>
                       </span>
-                      <span class="d-flex">
-                        <i class="material-icons mr-1">score</i>
-                        <strong class="mr-1">Readability:</strong>
-                        <strong class="text-warning">Ok</strong>
-                      </span> -->
+                      <div class="custom-control custom-radio mb-1">
+                        <input type="radio" id="notif-check-radio" name="formsRadioChecked" class="custom-control-input"
+                          checked>
+                        <label class="custom-control-label" for="notif-check-radio">Notification</label>
+                      </div>
+                      <div class="custom-control custom-radio mb-1">
+                        <input type="radio" id="event-check-radio" name="event-check-radio" class="custom-control-input">
+                        <label class="custom-control-label" for="event-check-radio">Event</label>
+                      </div>
+
                     </li>
                     <li class="list-group-item d-flex px-3">
                       <button id="clr-btn" class="btn btn-sm btn-outline-accent">
@@ -166,9 +151,9 @@
     // $(".datepicker").datepicker("setDate", new Date());
     $('.datepicker').datepicker({
       // setDate: new Date(),
-      format:'mm/dd/yyyy',
+      format: 'mm/dd/yyyy',
       autoclose: true,
-      defaultDate:'now'
+      defaultDate: 'now'
     });
     // $('.datepicker').datepicker('update', new Date());
     $('.js-pscroll').each(function () {
@@ -179,6 +164,7 @@
       })
     });
 
+    
 
   </script>
   <!--===============================================================================================-->
