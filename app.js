@@ -207,12 +207,8 @@ function checkFileType(type, file, cb) {
     }
 }
 
-app.get('/fileUpload/:type', (req, res) => {
-    var type = req.params.type;
-    res.render('./pages/admin/file', { type })
-});
 
-app.post('/fileUpload/:type', (req, res) => {
+app.post('/fileUpload/:type', authenticate, (req, res) => {
     var type = req.params.type;
     if (type == 'img') {
         imgUpload(req, res, (err) => {
@@ -306,12 +302,12 @@ app.post('/fileUpload/:type', (req, res) => {
     }
 });
 
-app.post('/addTagFile/:type', (req, res) => {
+app.post('/addTagFile/:type', authenticate, (req, res) => {
     var type = req.params.type;
     var id = req.body.id;
     var tags = req.body.tags;
-    console.log({tags,id,type});
-    if(tags != null){
+    console.log({ tags, id, type });
+    if (tags != null) {
         if (type == 'img') {
             Image.addTagsById(id, tags, function (img) {
                 res.status(200).send(img);
@@ -323,10 +319,10 @@ app.post('/addTagFile/:type', (req, res) => {
         } else {
             res.send('invalid');
         }
-    }else{
-        res.status(400).send({success:false});
+    } else {
+        res.status(400).send({ success: false });
     }
-    
+
 });
 
 
@@ -398,7 +394,7 @@ app.get('/getFileByTag/:type/:tag', cors(), function (req, res) {
         res.send('invalid');
     }
 })
-app.post('/fileDelete/:type', function (req, res) {
+app.post('/fileDelete/:type', authenticate, function (req, res) {
     var type = req.params.type;
     var id = req.body.id;
     if (type == 'img') {
