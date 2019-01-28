@@ -310,17 +310,23 @@ app.post('/addTagFile/:type', (req, res) => {
     var type = req.params.type;
     var id = req.body.id;
     var tags = req.body.tags;
-    if (type == 'img') {
-        Image.addTagsById(id, tags, function (img) {
-            res.status(200).send(img);
-        });
-    } else if (type == 'doc') {
-        Document.addTagsById(id, tags, function (doc) {
-            res.status(200).send(doc);
-        });
-    } else {
-        res.send('invalid');
+    console.log({tags,id,type});
+    if(tags != null){
+        if (type == 'img') {
+            Image.addTagsById(id, tags, function (img) {
+                res.status(200).send(img);
+            });
+        } else if (type == 'doc') {
+            Document.addTagsById(id, tags, function (doc) {
+                res.status(200).send(doc);
+            });
+        } else {
+            res.send('invalid');
+        }
+    }else{
+        res.status(400).send({success:false});
     }
+    
 });
 
 
@@ -363,7 +369,7 @@ app.get('/getFileByTag/:type/:tag', cors(), function (req, res) {
                 };
                 res.status(200).send(obj);
             })
-        } else if (tag == 'all' || tag == ""){
+        } else if (tag == 'all' || tag == "") {
             Image.getAllimage(function (img) {
                 try {
                     var obj = {
@@ -417,8 +423,9 @@ app.post('/fileDelete/:type', function (req, res) {
                     if (err) {
                         console.error(err);
                         res.status(500).send({ success: false });
+                    } else {
+                        res.status(200).send(docs);
                     }
-                    res.status(200).send(docs);
                 });
                 // console.log(docs.path);
 
@@ -439,7 +446,7 @@ app.post('/fileDelete/:type', function (req, res) {
 //POST notif
 app.post('/createNotif', authenticate, function (req, res) {
 
-    var body = _.pick(req.body, ['content', 'link', 'expireOn','contentType']);
+    var body = _.pick(req.body, ['content', 'link', 'expireOn', 'contentType']);
     var notif = new Notification(body);
     notif.save().then(() => {
         res.send({ success: true });
