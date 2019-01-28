@@ -1,17 +1,18 @@
 {
     "test": {
-      "PORT": 3000,
+      "PORT": 5001,
       "MONGODB_URI": "mongodb://localhost:27017/EsicRestAdmin",
       "JWT_SECRET": "testSecret"
     },
     "development": {
-      "PORT": 3000,
+      "PORT": 5001,
       "MONGODB_URI": "mongodb://localhost:27017/EsicRestAdmin",
       "JWT_SECRET": "deploymentSecret"
     },
     "production":{ 
-      "MONGODB_URI": "mongodb://rufus:delta9@ds161224.mlab.com:61224/esic-db",
-      "JWT_SECRET": "productionSecret"
+      "PORT": 5001,
+      "MONGODB_URI": "mongodb://localhost:27017/EsicRestAdmin",
+      "JWT_SECRET": "5S4Xp!5O4TlE5ZjToT7L5QlU7MiLpMuE"
     }
   }
   

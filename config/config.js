@@ -1,4 +1,5 @@
 var env = process.env.NODE_ENV || 'development';
+env = 'production';
 
 if (env === 'development' || env === 'test'|| env === 'production') {
   var config = require('./config.json');
