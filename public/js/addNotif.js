@@ -157,9 +157,7 @@ function ValidURL(str) {
 
 function clear() {
   document.getElementById("pub-btn").disabled = false;
-  document.getElementById('notif-check-radio').checked = true;
-  document.getElementById('event-check-radio').checked = false;
-  alertContent = 'notif';
+  alertType();
   quill.setContents([{ insert: '\n' }]);
   document.getElementById('link-inp-notif').value = "";
   document.getElementById('exp-date').value = timeConverter(Date.now());
@@ -169,15 +167,40 @@ document.getElementById('pub-btn').addEventListener('click', function () {
   submitVal();
 });
 document.getElementById('notif-check-radio').addEventListener('click', function () {
-  alertContent = 'notif';
-
-  document.getElementById('event-check-radio').checked = false;
+  alertType(0);
 });
 document.getElementById('event-check-radio').addEventListener('click', function () {
-  alertContent = 'event';
-
-  document.getElementById('notif-check-radio').checked = false;
+  alertType(1);
 });
+document.getElementById('recrutment-check-radio').addEventListener('click', function () {
+  alertType(2);
+});
+
+
+function alertType(type = 0){
+  var notifRadio = document.getElementById('notif-check-radio');
+  var eventRadio = document.getElementById('event-check-radio');
+  var recRadio = document.getElementById('recrutment-check-radio');
+  if(type == 0){
+    //type notif
+    alertContent = 'notif'
+    notifRadio.checked = true;
+    eventRadio.checked = false;
+    recRadio.checked = false;
+  }else if(type == 1){
+    //type event
+    alertContent = 'event';
+    notifRadio.checked = false;
+    eventRadio.checked = true;
+    recRadio.checked = false;
+  }else if(type == 2){
+    //type recruitment
+    alertContent = 'recrute';
+    notifRadio.checked = false;
+    eventRadio.checked = false;
+    recRadio.checked = true;
+  }
+}
 document.getElementById('clr-btn').addEventListener('click', function () {
   
   clear();

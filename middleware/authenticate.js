@@ -5,7 +5,7 @@ var authenticate = (req, res, next) => {
 
     var token = req.header('x-auth');
     if (!token) {
-        token = req.query.xAuth;        
+        token = req.query.xAuth;
     }
     if (!token) {
         token = req.session.xAuth;
@@ -20,8 +20,12 @@ var authenticate = (req, res, next) => {
         req.token = token;
         next();
     }).catch((e) => {
-        // res.status(401).send();
-        res.redirect('/auth');
+        // console.log({ 'method': req.method });
+        if (req.method == 'GET') {
+            res.redirect('/auth');
+        } else {
+            res.status(401).send();
+        };
     });
 };
 
