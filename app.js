@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 const multer = require('multer');
 const path = require('path');
+const imagemin = require('imagemin');
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminPngquant = require('imagemin-pngquant');
 
 var cors = require('cors');
 var session = require('express-session');
@@ -22,9 +25,7 @@ var { authenticate } = require('./middleware/authenticate');
 
 //=================================
 //image optimization
-const imagemin = require('imagemin');
-const imageminJpegtran = require('imagemin-jpegtran');
-const imageminPngquant = require('imagemin-pngquant');
+
 
 async function optimize() {
     const files = await imagemin(['./public/uploads/temp/*.{jpg,png}'], './public/uploads/thumbnails/', {
@@ -38,7 +39,7 @@ async function optimize() {
 
     console.log({ files });
     return Promise.resolve(files);
-   
+
     //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
 }
 //=================================
@@ -270,46 +271,46 @@ app.post('/fileUpload/:type', authenticate, (req, res) => {
                     var image = new Image(data);
 
                     // (async () => {
-                        var optimizeTemp = optimize()
+                    var optimizeTemp = optimize()
                         .then(function () {
                             // if (optimizeTemp) {
-                                try {
-                                    moveFile(`./public/uploads/temp/${req.file.filename}`, `./public/uploads/img/${req.file.filename}`, function () {
+                            try {
+                                moveFile(`./public/uploads/temp/${req.file.filename}`, `./public/uploads/img/${req.file.filename}`, function () {
 
-                                        // console.log(status)
-                                        fs.unlink(`./public/uploads/temp/${req.file.filename}`, function (err) {
-                                            if (err) {
-                                                res.status(400).status({ success: false });
-                                            }
+                                    // console.log(status)
+                                    fs.unlink(`./public/uploads/temp/${req.file.filename}`, function (err) {
+                                        if (err) {
+                                            res.status(400).status({ success: false });
+                                        }
 
-                                            console.log('in app.js code block');
-                                            image.save().then(function (data) {
-                                                var tags = _.pick(req.body, ['tags']);
-                                                console.log({ tags });
-                                                image.addTags(tags);
+                                        console.log('in app.js code block');
+                                        image.save().then(function (data) {
+                                            var tags = _.pick(req.body, ['tags']);
+                                            console.log({ tags });
+                                            image.addTags(tags);
 
-                                                // if (err) {
-                                                //     res.status(400).send();
-                                                // } 
-                                                res.status(200).send({
-                                                    id: data._id,
-                                                    success: true,
-                                                    msg: 'File Uploaded!',
-                                                    file: path,
-                                                    thumbnail: `/uploads/thumbnails/${req.file.filename}`,
-                                                    size: req.file.size
-                                                });
-
-
+                                            // if (err) {
+                                            //     res.status(400).send();
+                                            // } 
+                                            res.status(200).send({
+                                                id: data._id,
+                                                success: true,
+                                                msg: 'File Uploaded!',
+                                                file: path,
+                                                thumbnail: `/uploads/thumbnails/${req.file.filename}`,
+                                                size: req.file.size
                                             });
+
 
                                         });
 
+                                    });
 
-                                    })
-                                } catch (e) {
-                                    console.log(e);
-                                }
+
+                                })
+                            } catch (e) {
+                                console.log(e);
+                            }
 
                             // } else {
                             //     console.log('no status!')
