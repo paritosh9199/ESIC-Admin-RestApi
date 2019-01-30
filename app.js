@@ -17,6 +17,35 @@ var { Notification } = require('./models/notification');
 var { Image } = require('./models/images');
 var { Document } = require('./models/document');
 var { authenticate } = require('./middleware/authenticate');
+// var { optimizeSinglePicture } = require('./middleware/imagemin');
+// var { optimizeSinglePicture } = require('./middleware/optimize');
+
+//=================================
+//image optimization
+const imagemin = require('imagemin');
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminPngquant = require('imagemin-pngquant');
+
+async function optimize() {
+    const files = await imagemin(['./public/uploads/temp/*.{jpg,png}'], './public/uploads/thumbnails/', {
+        plugins: [
+            imageminJpegtran(),
+            imageminPngquant({
+                quality: [0.6, 0.8]
+            })
+        ]
+    });
+
+    console.log({ files });
+    return Promise.resolve(files);
+   
+    //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
+}
+//=================================
+var { moveFile } = require('./middleware/movefile');
+
+// var { optimize } = require('./optimize');
+
 
 var whitelist = ['http://esichyd.herokuapp.com/', 'http://localhost:5000/*']
 var corsOptions = {
@@ -152,7 +181,7 @@ app.post('/getCount', function (req, res) {
 //POST file
 // multer middleware
 const imgStorage = multer.diskStorage({
-    destination: './public/uploads/img',
+    destination: './public/uploads/temp',
     filename: function (req, file, cb) {
         cb(null, file.originalname + '-image-' + Date.now() + path.extname(file.originalname));
     }
@@ -228,26 +257,67 @@ app.post('/fileUpload/:type', authenticate, (req, res) => {
                     });
                 } else {
                     // var tags = ["tag1", "tag2"];
-                    var tags = _.pick(req.body, ['tags']);
+
+                    var path = `/uploads/img/${req.file.filename}`;
                     var data = {
                         name: req.file.originalname,
                         type: req.file.mimetype,
                         size: req.file.size,
                         createdOn: Date.now(),
-                        path: `/uploads/img/${req.file.filename}`
+                        thumbnail: `/uploads/thumbnails/${req.file.filename}`,
+                        path
                     }
                     var image = new Image(data);
-                    image.save().then(function (data) {
-                        console.log(tags)
-                        image.addTags(tags);
-                        res.send({
-                            id: data._id,
-                            success: true,
-                            msg: 'File Uploaded!',
-                            file: `/uploads/img/${req.file.filename}`,
-                            type
+
+                    // (async () => {
+                        var optimizeTemp = optimize()
+                        .then(function () {
+                            // if (optimizeTemp) {
+                                try {
+                                    moveFile(`./public/uploads/temp/${req.file.filename}`, `./public/uploads/img/${req.file.filename}`, function () {
+
+                                        // console.log(status)
+                                        fs.unlink(`./public/uploads/temp/${req.file.filename}`, function (err) {
+                                            if (err) {
+                                                res.status(400).status({ success: false });
+                                            }
+
+                                            console.log('in app.js code block');
+                                            image.save().then(function (data) {
+                                                var tags = _.pick(req.body, ['tags']);
+                                                console.log({ tags });
+                                                image.addTags(tags);
+
+                                                // if (err) {
+                                                //     res.status(400).send();
+                                                // } 
+                                                res.status(200).send({
+                                                    id: data._id,
+                                                    success: true,
+                                                    msg: 'File Uploaded!',
+                                                    file: path,
+                                                    thumbnail: `/uploads/thumbnails/${req.file.filename}`,
+                                                    size: req.file.size
+                                                });
+
+
+                                            });
+
+                                        });
+
+
+                                    })
+                                } catch (e) {
+                                    console.log(e);
+                                }
+
+                            // } else {
+                            //     console.log('no status!')
+                            // }
+
                         });
-                    });
+                    // })();
+
 
                 }
             }

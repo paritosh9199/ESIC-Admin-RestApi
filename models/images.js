@@ -34,6 +34,12 @@ var ImageSchema = new mongoose.Schema({
         minlength: 1,
         trim: true
     },
+    thumbnail: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 1
+    },
     path: {
         type: String,
         required: true,
@@ -110,7 +116,7 @@ ImageSchema.statics.addTagsById = function (id,tags,callback) {
             callback(img)
         });
         // return img;
-    });    
+    });
 };
 
 
