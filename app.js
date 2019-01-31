@@ -9,6 +9,7 @@ const path = require('path');
 const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
+const imageminMozjpeg = require('imagemin-mozjpeg');
 
 var cors = require('cors');
 var session = require('express-session');
@@ -19,7 +20,9 @@ var { User } = require('./models/user');
 var { Notification } = require('./models/notification');
 var { Image } = require('./models/images');
 var { Document } = require('./models/document');
+var { Video } = require('./models/video');
 var { authenticate } = require('./middleware/authenticate');
+var { getVidData, getVidId } = require('./middleware/youtubeinfo');
 // var { optimizeSinglePicture } = require('./middleware/imagemin');
 // var { optimizeSinglePicture } = require('./middleware/optimize');
 
@@ -30,12 +33,15 @@ var { authenticate } = require('./middleware/authenticate');
 async function optimize() {
     const files = await imagemin(['./public/uploads/temp/*.{jpg,png}'], './public/uploads/thumbnails/', {
         plugins: [
-            imageminJpegtran(),
-            imageminPngquant({
-                quality: [0.6, 0.8]
-            })
+            imageminMozjpeg({ quality: 30 }),
+            imageminJpegtran({ quality: 30 }),
+            imageminPngquant({ quality: [0.1, 0.2] })
         ]
     });
+
+    // {
+    //     quality: [0.1, 0.1]
+    // }
 
     console.log({ files });
     return Promise.resolve(files);
@@ -159,6 +165,25 @@ app.get('/documents.add', authenticate, function (req, res) {
     res.render('./pages/admin/addDocuments.ejs', usr);
 });
 
+app.get('/videos.manage', authenticate, function (req, res) {
+
+    var usr = {
+        "user": req.user
+    }
+    // res.render('./pages/admin/login.ejs');
+
+    res.render('./pages/admin/videos.ejs', usr);
+});
+app.get('/videos.add', authenticate, function (req, res) {
+
+    var usr = {
+        "user": req.user
+    }
+    // res.render('./pages/admin/login.ejs');
+
+    res.render('./pages/admin/addVideos.ejs', usr);
+});
+
 
 //POST getCount
 app.post('/getCount', function (req, res) {
@@ -178,6 +203,32 @@ app.post('/getCount', function (req, res) {
         });
     });
 
+});
+//POST getYTdata
+
+app.post('/api/getYtData',function(req,res){
+    var link = req.body.videoLink;
+    var vid = getVidId(link);
+    var thumbnail = `https://img.youtube.com/vi/${vid}/0.jpg`
+    getVidData(vid, function (data) {
+        console.log({ "got vid": Date.now() })
+        if (data.success) {
+            vidDb = {
+                name: data.name,
+                duration: data.duration,
+                videoLink:  req.body.videoLink,
+                vid:vid,
+                thumbnail:thumbnail,
+                success:true
+            }
+            console.log({ "got vidDb": Date.now() })
+            
+            res.status(200).send(vidDb)
+        } else {
+            res.status(400).send({ success: false });
+        }
+
+    })
 });
 //POST file
 // multer middleware
@@ -238,7 +289,7 @@ function checkFileType(type, file, cb) {
 }
 
 
-app.post('/fileUpload/:type', authenticate, (req, res) => {
+app.post('/fileUpload/:type', (req, res) => {
     var type = req.params.type;
     if (type == 'img') {
         imgUpload(req, res, (err) => {
@@ -368,6 +419,49 @@ app.post('/fileUpload/:type', authenticate, (req, res) => {
                 }
             }
         });
+    } else if (type == 'vid') {
+        //get link and tag
+        //get video id
+        //use id to get video details
+        //create schema data 
+        //save that schema data 
+        // save the tags for that schema
+        //send data and confirmation to the user
+        var body = _.pick(req.body, ['videoLink']);
+        // var tags = _.pick(req.body, ['tags']);
+        var videoId = getVidId(body.videoLink);
+        var vidDb = {};
+        console.log({ "saving req started": Date.now() })
+
+        getVidData(videoId, function (data) {
+            console.log({ "got vid": Date.now() })
+            if (data.success) {
+                vidDb = {
+                    name: data.name,
+                    duration: data.duration,
+                    createdOn: Date.now(),
+                    videoLink: body.videoLink,
+                }
+                console.log({ "got vidDb": Date.now() })
+
+                var vidModel = new Video(vidDb);
+                vidModel.save().then((vid) => {
+                    console.log({ "saved Vid": Date.now() })
+
+                    res.send({ vid, success: true });
+                }).catch((e) => {
+                    console.log(e);
+                    res.status(400).send(e);
+                })
+            } else {
+                res.status(400).send({ success: false });
+            }
+
+        })
+
+
+
+
     } else {
         res.send('invalid');
     }
@@ -386,6 +480,10 @@ app.post('/addTagFile/:type', authenticate, (req, res) => {
         } else if (type == 'doc') {
             Document.addTagsById(id, tags, function (doc) {
                 res.status(200).send(doc);
+            });
+        } else if (type == 'vid') {
+            Video.addTagsById(id, tags, function (vid) {
+                res.status(200).send(vid);
             });
         } else {
             res.send('invalid');
@@ -460,7 +558,15 @@ app.get('/getFileByTag/:type/:tag', cors(), function (req, res) {
             })
         }
     } else if (type == 'vid') {
-        // res.send('vid');
+        if (tag != "" && tag != null) {
+            Video.findBySingleTag(tag).then(function (data) {
+                var obj = {
+                    dataObj: data,
+                    type: 'vid'
+                };
+                res.status(200).send(obj);
+            })
+        }
     } else {
         res.send('invalid');
     }
@@ -476,7 +582,13 @@ app.post('/fileDelete/:type', authenticate, function (req, res) {
                         console.error(err);
                         res.status(500).send({ success: false });
                     }
-                    res.status(200).send(docs);
+                    fs.unlink('./public' + docs.thumbnail, function (errThumbnail) {
+                        if (errThumbnail) {
+                            console.error(err);
+                            res.status(500).send({ success: false });
+                        }
+                        res.status(200).send(docs);
+                    });
                 });
             } catch (error) {
                 console.log(error)
@@ -502,7 +614,15 @@ app.post('/fileDelete/:type', authenticate, function (req, res) {
             }
         });
     } else if (type == 'vid') {
-        //todo make video
+        var body = _.pick(req.body, ['id']);
+        Video.deleteByID(body.id, function (docs) {
+            try {
+                res.status(200).send(docs);
+            } catch (error) {
+                console.log(error)
+                res.status(400).send(error);
+            }
+        });
     } else {
         res.send('invalid');
     }

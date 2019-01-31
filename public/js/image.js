@@ -58,7 +58,7 @@ function setImages(images) {
                       <td class="cell100 column1 p-l-10">
                       ${i + 1}.
                       </td>
-                      <td class="cell100 column2"><img src="${img.path}" class="image-thumbnail"alt="Image" title="${img.name}"><span class="hidden">${(img.name)}</span></td>
+                      <td class="cell100 column2"><img src="${img.thumbnail}" class="image-thumbnail"alt="Image" title="${img.name}"><span class="hidden">${(img.name)}</span></td>
                       <td class="cell100 column3">${formatBytes(img.size)}</td>
                       <td class="cell100 column4">${timeConverter(img.createdOn)}</td>
                       <td class="cell100 column5 p-r-10 center-align">

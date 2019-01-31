@@ -62,6 +62,18 @@
                     <span>Add New Image</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <%= typeof vid != 'undefined' ? 'active' : '' %>" href="/videos.manage">
+                    <i class="fas fa-images"></i>
+                    <span>Videos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= typeof newVid != 'undefined' ? 'active' : '' %>" href="/videos.add">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Add New Video</span>
+                </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link " href="user-profile-lite.html">
                 <i class="material-icons">person</i>

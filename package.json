@@ -27,6 +27,7 @@
     "mongoose": "^5.4.1",
     "moongoose": "0.0.5",
     "multer": "^1.4.1",
-    "validator": "^10.10.0"
+    "validator": "^10.10.0",
+    "youtube.get-video-info": "^1.0.1"
   }
 }

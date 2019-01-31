@@ -16,6 +16,11 @@
     width: 80px;
 }
 
+#file-info h6#vid-tag {
+    display: inline-block;
+    width: 100px;
+}
+
 #spinner {
     /* width:50px !important; */
     /* height:300px !important; */
