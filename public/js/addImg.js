@@ -20,7 +20,6 @@ var setTags = [
     "BioWasteManagement",
     "RTI",
     "Admission",
-    "University",
     "Awards",
     "Infrastrutcure",
     "Events",

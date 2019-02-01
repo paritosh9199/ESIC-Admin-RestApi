@@ -22,7 +22,7 @@ var { Image } = require('./models/images');
 var { Document } = require('./models/document');
 var { Video } = require('./models/video');
 var { authenticate } = require('./middleware/authenticate');
-var { getVidData, getVidId } = require('./middleware/youtubeinfo');
+var { getVidData, getVidId } = require('./middleware/youtubeInfo');
 // var { optimizeSinglePicture } = require('./middleware/imagemin');
 // var { optimizeSinglePicture } = require('./middleware/optimize');
 
