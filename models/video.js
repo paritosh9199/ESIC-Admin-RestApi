@@ -21,11 +21,11 @@ var VideoSchema = new mongoose.Schema({
         trim: true,
         minlength: 1
     },
-    duration:{
+    duration: {
         type: Number,
-        required:true,
-        minlength:1,
-        trim:true
+        required: true,
+        minlength: 1,
+        trim: true
     },
     createdOn: {
         type: Number,
@@ -34,6 +34,22 @@ var VideoSchema = new mongoose.Schema({
         minlength: 1,
         trim: true
     },
+    videoId: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 1
+    },
+    thumbnail: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 1,
+        validate: {
+            validator: validator.isURL,
+            message: 'thumbnail is not a valid URL'
+        }
+    },
     videoLink: {
         type: String,
         required: true,
@@ -41,7 +57,7 @@ var VideoSchema = new mongoose.Schema({
         minlength: 1,
         validate: {
             validator: validator.isURL,
-            message: '{VALUE} is not a valid URL'
+            message: 'videoLink is not a valid URL'
         }
     },
     tags: [{
@@ -84,7 +100,7 @@ var VideoSchema = new mongoose.Schema({
 
 VideoSchema.methods.addTags = function (tags) {
     var vid = this;
-    for(var i = 0; i<tags.length;i++){
+    for (var i = 0; i < tags.length; i++) {
         var tag = tags[i];
         vid.tags.push({ tag });
     }
@@ -93,12 +109,12 @@ VideoSchema.methods.addTags = function (tags) {
     });
 };
 
-VideoSchema.statics.addTagsById = function (id,tags,callback) {
+VideoSchema.statics.addTagsById = function (id, tags, callback) {
     var vid = this;
     vid.findOne({
         '_id': id,
-    }).then(function(vid){
-        for(var i = 0; i<tags.length;i++){
+    }).then(function (vid) {
+        for (var i = 0; i < tags.length; i++) {
             var tag = tags[i];
             vid.tags.push({ tag });
         }
@@ -106,7 +122,7 @@ VideoSchema.statics.addTagsById = function (id,tags,callback) {
             callback(vid)
         });
         // return vid;
-    });    
+    });
 };
 
 

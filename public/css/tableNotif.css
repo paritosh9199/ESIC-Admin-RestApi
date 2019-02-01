@@ -207,6 +207,11 @@ tr.body{
   text-align: center;
 }
 
+.column5 .center-action {
+  display: flex;
+  justify-content: center;   
+}
+
 .table100-head th {
   padding-top: 18px;
   padding-bottom: 18px;

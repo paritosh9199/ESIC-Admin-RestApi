@@ -3,14 +3,14 @@
 
 
 
-var setTags =  [
+var setTags = [
     "PressMedia",
     "AnnualReport",
     "University",
-    "Admission",
+    "Administration",
     "Courses",
     "StudentZone",
-    "Conference",
+    "Conference-CME",
     "Training",
     "JournalESI",
     "Research",
@@ -25,6 +25,36 @@ var setTags =  [
     "Infrastrutcure",
     "Events",
     "Publication",
+    "GeneralSurgery",
+    "GeneralMedicine",
+    "ObstetricsandGynecology",
+    "Pulmonology",
+    "Dermatology",
+    "Paediatrics",
+    "Psychiatry",
+    "Orthopedics",
+    "Opthalmology",
+    "ENT",
+    "Anesthesiology",
+    "Radiodiagnosis",
+    "Hematology",
+    "Dentistry",
+    "Physiotherapy",
+    "ClinicalBiochemistry",
+    "ClinicalPathology",
+    "ClinicalMicrobiology",
+    "Neurology",
+    "Neurosurgery",
+    "PediatricSurgery",
+    "Urology",
+    "Nephrology",
+    "Cardiology",
+    "PlasticSurgery",
+    "GaestroEnterology",
+    "CardioTheraicVascular",
+    "MedicalOncology",
+    "SurgicalOncology",
+    "Endocrinology"
 ]
 
 changeUi();
@@ -36,7 +66,7 @@ inputElement.onchange = function (event) {
     document.getElementById('fl-sz').innerHTML = formatBytes(file.size);
     //TODO do something with fileList.
 };
-addTags(setTags);
+addTags(setTags.sort());
 
 function displayAlert(msg, type = 1) {
 

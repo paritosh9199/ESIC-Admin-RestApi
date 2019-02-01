@@ -3,14 +3,14 @@
 
 
 
-var setTags =  [
+var setTags = [
     "PressMedia",
     "AnnualReport",
     "University",
-    "Admission",
+    "Administration",
     "Courses",
     "StudentZone",
-    "Conference",
+    "Conference-CME",
     "Training",
     "JournalESI",
     "Research",
@@ -20,11 +20,40 @@ var setTags =  [
     "BioWasteManagement",
     "RTI",
     "Admission",
-    "University",
     "Awards",
     "Infrastrutcure",
     "Events",
     "Publication",
+    "GeneralSurgery",
+    "GeneralMedicine",
+    "ObstetricsandGynecology",
+    "Pulmonology",
+    "Dermatology",
+    "Paediatrics",
+    "Psychiatry",
+    "Orthopedics",
+    "Opthalmology",
+    "ENT",
+    "Anesthesiology",
+    "Radiodiagnosis",
+    "Hematology",
+    "Dentistry",
+    "Physiotherapy",
+    "ClinicalBiochemistry",
+    "ClinicalPathology",
+    "ClinicalMicrobiology",
+    "Neurology",
+    "Neurosurgery",
+    "PediatricSurgery",
+    "Urology",
+    "Nephrology",
+    "Cardiology",
+    "PlasticSurgery",
+    "GaestroEnterology",
+    "CardioTheraicVascular",
+    "MedicalOncology",
+    "SurgicalOncology",
+    "Endocrinology"
 ]
 
 changeUi();
@@ -37,7 +66,7 @@ inputElement.onchange = function (event) {
     document.getElementById('fl-sz').innerHTML = formatBytes(file.size);
     //TODO do something with fileList.
 };
-addTags(setTags);
+addTags(setTags.sort());
 
 function displayAlert(msg, type = 1) {
 
@@ -101,8 +130,8 @@ $("#inputGroupFileAddon03").on("click", function () {
         .html(fileName);
 });
 
-function clearVals(){
-    
+function clearVals() {
+
     document.getElementById('fl-nm').innerHTML = "Image File not selected";
     document.getElementById('fl-sz').innerHTML = "-";
     document.getElementById('fl-tg').innerHTML = "-";
@@ -121,9 +150,9 @@ $("#upload-form").submit(function (e) {
             if (typeof tagValues !== 'undefined' && tagValues.length > 0) {
                 changeUi(1);
 
-                displayAlert('Please wait while we are Uploading document! Do not refresh this page until the upload has been comleted',1);
+                displayAlert('Please wait while we are Uploading document! Do not refresh this page until the upload has been comleted', 1);
 
-                
+
                 var formData = new FormData(this);
                 console.log(formData);
                 $.ajax({
@@ -147,7 +176,7 @@ $("#upload-form").submit(function (e) {
                             data: JSON.stringify(dataTags),
                             contentType: "application/json",
                             success: function (request, status, headers) {
-                                
+
                                 displayAlert('Successfully Uploded file!', 2);
                                 clearVals();
                                 changeUi();

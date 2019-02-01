@@ -62,6 +62,7 @@ function setDocs(docs) {
                       <td class="cell100 column3">${formatBytes(doc.size)}</td>
                       <td class="cell100 column4">${timeConverter(doc.createdOn)}</td>
                       <td class="cell100 column5 p-r-10 center-align">
+                      <div class="center-action w-100">
                        <div class="btn-group btn-group-sm d-flex  " role="group" aria-label="Table row actions">
                         
                         <!--<button type="button" class="btn btn-white active-light">
@@ -91,6 +92,7 @@ function setDocs(docs) {
                          <i class="material-icons"></i>
                         </button>
                         
+                       </div>
                        </div>
                       </td>
                      </tr>

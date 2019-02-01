@@ -206,7 +206,7 @@ app.post('/getCount', function (req, res) {
 });
 //POST getYTdata
 
-app.post('/api/getYtData',function(req,res){
+app.post('/api/getYtData', function (req, res) {
     var link = req.body.videoLink;
     var vid = getVidId(link);
     var thumbnail = `https://img.youtube.com/vi/${vid}/0.jpg`
@@ -216,13 +216,13 @@ app.post('/api/getYtData',function(req,res){
             vidDb = {
                 name: data.name,
                 duration: data.duration,
-                videoLink:  req.body.videoLink,
-                vid:vid,
-                thumbnail:thumbnail,
-                success:true
+                videoLink: req.body.videoLink,
+                vid: vid,
+                thumbnail: thumbnail,
+                success: true
             }
             console.log({ "got vidDb": Date.now() })
-            
+
             res.status(200).send(vidDb)
         } else {
             res.status(400).send({ success: false });
@@ -436,10 +436,17 @@ app.post('/fileUpload/:type', (req, res) => {
         getVidData(videoId, function (data) {
             console.log({ "got vid": Date.now() })
             if (data.success) {
+                var title = data.name.split("+");
+                var videoTitle = "";
+                for (var i = 0; i < title.length; i++) {
+                    videoTitle += title[i] + " ";
+                }
                 vidDb = {
-                    name: data.name,
+                    name: videoTitle,
                     duration: data.duration,
                     createdOn: Date.now(),
+                    videoId: videoId,
+                    thumbnail: `https://img.youtube.com/vi/${videoId}/0.jpg`,
                     videoLink: body.videoLink,
                 }
                 console.log({ "got vidDb": Date.now() })
@@ -515,7 +522,13 @@ app.get('/fileRead/:type', cors(), function (req, res) {
             }
         });
     } else if (type == 'vid') {
-        res.send('vid');
+        Video.getAllvid(function (vid) {
+            try {
+                res.status(200).send(vid);
+            } catch (e) {
+                res.status(400).send(e);
+            }
+        });
     } else {
         res.send('invalid');
     }

@@ -3,18 +3,29 @@
 
 <head>
 
-  <%var vid = true;%>
-  <%var page="All Notification-Esic Admin"%>
+  <% var vid = true;%>
+  <%var page="All Videos-Esic Admin"%>
   <% include ./partials/header %>
  <!--===============================================================================================-->
- <!-- <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css"> -->
+ <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
  <!--===============================================================================================-->
- <!-- <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css"> -->
+ <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
  <!--===============================================================================================-->
  <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
 
- <!-- <link rel="stylesheet" href="css/table.css"> -->
+ <link rel="stylesheet" href="css/tableVideo.css">
+ <link rel="stylesheet" href="css/spin.css">
 
+<style>
+.yt-thumbnail{
+  border-radius: 6px;
+  display: inline-block;
+  max-width:120px;
+  max-height:90px;
+  width: auto;
+  height: auto;
+}
+</style>
 
 
 </head>
@@ -25,23 +36,115 @@
  <div class="container-fluid">
   <div class="row">
 
+
+
+
+
    <!-- Main Sidebar -->
    <% include ./partials/nav-aside %>
+
+
+
+
+
+
+
 
    <!-- End Main Sidebar -->
    <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
      <% include ./partials/nav-main %>
     <!-- / .main-navbar -->
+    <div id="top-alert">
+
+    </div> 
+    
     <div class="main-content-container container-fluid px-4">
-      <!-- Page Header -->
-      <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-          <span class="text-uppercase page-subtitle">Videos Dashboard</span>
-          <h3 class="page-title">All Videos</h3>
-        </div>
+     <!-- Page Header -->
+     <div class="page-header row no-gutters py-4">
+      <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+       <span class="text-uppercase page-subtitle">Video Dashboard</span>
+       <h3 class="page-title">All Videos</h3>
       </div>
-      <!-- End Page Header -->
-      enter something here
+     </div>
+     <!-- End Page Header -->
+     <div class="row">
+
+      <div class="col-lg-12 col-md-12">
+       <!-- Add New Post Form -->
+       <div class="card card-small mb-3">
+        <div class="card-header border-bottom">
+         <!-- <h4 class="m-0 d-inline-block">All Notification</h6> -->
+
+          <input id="search-btn-al" type="search" class="search-btn" placeholder="" aria-controls="DataTables_Table_0">
+        </div>
+        <div class="card-body">
+         <!-- <form class="add-new-post">
+                                        <input class="form-control form-control-lg mb-3" type="text" placeholder="Your Post Title">
+                                        <div id="editor-container" class="add-new-post__editor mb-1"></div>
+                                    </form> -->
+
+         <div class="table100 ver1">
+          <div class="table100-head">
+           <!-- <table>
+            <thead>
+             <tr class="row100 head">
+              <th class="cell100 column1"></th>
+              <th class="cell100 column2">Content of Notification</th>
+              <th class="cell100 column3">Created On</th>
+              <th class="cell100 column4">Expiry On</th>
+              <th class="cell100 column5">Action</th>
+             </tr>
+            </thead>
+           </table> -->
+          </div>
+
+          <div class="table100-body js-pscroll" id="table-notif-display-setter">
+           <table>
+            <tbody id="table-body-tb">
+
+             
+              <!-- <td class="file-manager__item-icon sorting_1" tabindex="0"> -->
+               <!-- <div>
+                <i class="material-icons"></i>
+               </div> -->
+        
+              <!-- </td> -->
+              
+
+             
+            </tbody>
+           </table>
+          </div>
+
+          <div id="spinner" class="w-100">
+
+              <br><br><br><br><br>
+              <div id="spnnr-loder">
+                <!-- <div class=" js-preloader flex-center"> -->
+                <!-- UPLOADING -->
+                <div class="dots w-100">
+                  <div class="dot">i</div>
+                  <div class="dot">i</div>
+                  <div class="dot">i</div>
+                </div>
+                <!-- </div> -->
+              </div>
+              <br><br><br><br><br><br><br>
+            </div>
+            <script>document.getElementById("table-notif-display-setter").style.display = "none";</script>
+         </div>
+
+         <div id="modal-container">
+
+         </div>
+
+        </div>
+       </div>
+       <!-- / Add New Post Form -->
+      </div>
+
+      
+     </div>
     </div>
      <% include ./partials/footer %>
     
@@ -52,24 +155,27 @@
   </div>
  </div>
  
-
-
  <% include ./partials/dependencies %>
+
+
+ <script src="js/app/app-blog-new-post.1.1.0.js"></script>
 
  <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
  <script>
-  // $('.js-pscroll').each(function () {
-  //  var ps = new PerfectScrollbar(this);
+  $('.js-pscroll').each(function () {
+   var ps = new PerfectScrollbar(this);
 
-  //  $(window).on('resize', function () {
-  //   ps.update();
-  //  })
-  // });
+   $(window).on('resize', function () {
+    ps.update();
+   })
+  });
 
 
  </script>
  <!--===============================================================================================-->
+ <script src="js/tableDocs.js"></script>
+ <script src="js/video.js"></script>
 
 </body>
-
+ 
 </html>

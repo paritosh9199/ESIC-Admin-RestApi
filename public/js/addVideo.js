@@ -6,10 +6,10 @@ var setTags = [
     "PressMedia",
     "AnnualReport",
     "University",
-    "Admission",
+    "Administration",
     "Courses",
     "StudentZone",
-    "Conference",
+    "Conference-CME",
     "Training",
     "JournalESI",
     "Research",
@@ -19,17 +19,46 @@ var setTags = [
     "BioWasteManagement",
     "RTI",
     "Admission",
-    "University",
     "Awards",
     "Infrastrutcure",
     "Events",
     "Publication",
+    "GeneralSurgery",
+    "GeneralMedicine",
+    "ObstetricsandGynecology",
+    "Pulmonology",
+    "Dermatology",
+    "Paediatrics",
+    "Psychiatry",
+    "Orthopedics",
+    "Opthalmology",
+    "ENT",
+    "Anesthesiology",
+    "Radiodiagnosis",
+    "Hematology",
+    "Dentistry",
+    "Physiotherapy",
+    "ClinicalBiochemistry",
+    "ClinicalPathology",
+    "ClinicalMicrobiology",
+    "Neurology",
+    "Neurosurgery",
+    "PediatricSurgery",
+    "Urology",
+    "Nephrology",
+    "Cardiology",
+    "PlasticSurgery",
+    "GaestroEnterology",
+    "CardioTheraicVascular",
+    "MedicalOncology",
+    "SurgicalOncology",
+    "Endocrinology"
 ];
 var tagValues = [];
 var videoDisplayDataStatus = false;
 
 changeUi();
-addTags(setTags);
+addTags(setTags.sort());
 
 function displayAlert(msg, type = 1) {
 
@@ -214,7 +243,7 @@ $("#upload-form").submit(function (e) {
                             success: function (request, status, headers) {
 
                                 clearVals();
-                                document.getElementById('get-yt-link').innerHTML = "hola";
+                                document.getElementById('get-yt-link').innerHTML = "";
                                 displayAlert('Successfully Uploded video!', 2);
                                 videoDisplayDataStatus = true;
                                 changeUi();

@@ -28,14 +28,26 @@ function displayAlert(msg, type = 1) {
     `
 }
 
-function setImages(images) {
+
+function convertSeconds(sec) {
+    let totalSeconds = sec;
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
+
+    return ((hours > 0) ? (hours + "h:") : '') + ((minutes > 0) ? (minutes + "m:") : '') + ((seconds > 0) ? (seconds + "s") : '');
+}
+
+
+function setVids(vids) {
     changeUi();
     document.getElementById('table-body-tb').innerHTML = '';
     document.getElementById('modal-container').innerHTML = '';
     document.querySelector('.table100-head').innerHTML = '';
-    if (images == '' || images == null) {
+    if (vids == '' || vids == null) {
         document.getElementById('table-body-tb').innerHTML = `
-    <div class='info w-100'><center>Upload few images to view them here!</center></div>
+    <div class='info w-100'><center>Add few Videos to view them here!</center></div>
     `;
     } else {
         document.querySelector('.table100-head').innerHTML = `
@@ -43,27 +55,30 @@ function setImages(images) {
             <thead>
              <tr class="row100 head">
               <th class="cell100 column1"></th>
-              <th class="cell100 column2">Images</th>
-              <th class="cell100 column3">Size</th>
+              <th class="cell100 column2">Videos</th>
+              <th class="cell100 column3">Duration</th>
               <th class="cell100 column4">Uploaded On</th>
               <th class="cell100 column5">Actions</th>
              </tr>
             </thead>
         </table>`;
 
-        for (var i = 0; i < images.length; i++) {
-            img = images[i];
+        for (var i = 0; i < vids.length; i++) {
+            vid = vids[i];
             document.getElementById('table-body-tb').innerHTML += `
                      <tr class="row100 body">
                       <td class="cell100 column1 p-l-10">
                       ${i + 1}.
                       </td>
-                      <td class="cell100 column2"><img src="${img.thumbnail}" class="image-thumbnail"alt="Image" title="${img.name}"><span class="hidden">${(img.name)}</span></td>
-                      <td class="cell100 column3">${formatBytes(img.size)}</td>
-                      <td class="cell100 column4">${timeConverter(img.createdOn)}</td>
+                      <td class="cell100 column2">
+                      <img src="${vid.thumbnail}" class="yt-thumbnail" alt="Video Thumbnail">
+                      <h6 style="display:inline-block" class="m-l-10">${(vid.name)}</h6>
+                      </td>
+                      <td class="cell100 column3">${convertSeconds(vid.duration)}</td>
+                      <td class="cell100 column4">${timeConverter(vid.createdOn)}</td>
                       <td class="cell100 column5 p-r-10 center-align">
                       <div class="center-action w-100">
-                       <div class="btn-group btn-group-sm d-flex  " role="group" aria-label="Table row actions">
+                       <div class="btn-group btn-group-sm d-flex" role="group" aria-label="Table row actions">
                         
                         <!--<button type="button" class="btn btn-white active-light">
                          <i class="material-icons"></i>
@@ -72,28 +87,22 @@ function setImages(images) {
                         <i class="fas fa-external-link-square-alt"></i>
                         </button>-->
 
-                        <a href="${img.path}" target="_blank" type="button" class="btn btn-white active-light" download="${img.name}">
+                        <a href="${vid.videoLink}" target="_blank" type="button" class="btn btn-white active-light">
     
-                        <i class="fas fa-download"></i>
-     
-                        </a>
-
-                        <a href="${img.path}" target="_blank" type="button" class="btn btn-white active-light">
-    
-                        <i class="fas fa-external-link-alt "></i>
+                        <i class="fas fa-external-link-alt "></i><span class="hidden">i</span>
     
                         </a>
                         <button type="button" class="btn btn-white active-light" data-toggle="modal" data-target="#modal-tag-${i + 1}">
-                        <span id="img-tag-${i + 1}" class="hidden img-tag">${setTags(img.tags)}</span>
-                        <i class="fas fa-tags"></i>
+                        <span id="vid-tag-${i + 1}" class="hidden vid-tag">${setTags(vid.tags)}</span>
+                        <i class="fas fa-tags"></i><span class="hidden">i</span>
                         </button>
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-del-${i + 1}">
-                        <span id="img-id-${i + 1}" class="hidden img-id">${img._id}</span>
-                         <i class="material-icons"></i>
+                        <span id="vid-id-${i + 1}" class="hidden vid-id">${vid._id}</span>
+                         <i class="material-icons"></i><span class="hidden">i</span>
                         </button>
                         
                        </div>
-                       </div>
+                      </div>
                       </td>
                      </tr>
     
@@ -110,7 +119,7 @@ function setImages(images) {
             </button>
           </div>
           <div class="modal-body">
-            Are you sure you want to delete ${img.name}.
+            Are you sure you want to delete ${vid.name}.
            
           </div>
           <div class="modal-footer">
@@ -133,8 +142,8 @@ function setImages(images) {
             </button>
           </div>
           <div class="modal-body">
-            <p><em><strong>Note:</strong> Tags define where the images will be visible in the website. You can also search for an image based on tags.</em><br><br></p>
-            Tags for ${img.name}:<br> ${setTags(img.tags)}.
+            <p><em><strong>Note:</strong> Tags define where the Videos will be visible in the website. You can also search for a video based on tags.</em><br><br></p>
+            Tags for ${vid.name}:<br> ${setTags(vid.tags)}.
            
           </div>
           <div class="modal-footer">
@@ -148,15 +157,7 @@ function setImages(images) {
 
             // onclick="hey(${i+1})"
             var n = i + 1;
-            // var btn = 'del-btn-' + n;
-            // var btn = 'btn-' + n;
-            // var id = 'del-id-' + n;
-            // document.getElementById(btn).addEventListener('click', function () {
-            // var id = document.getElementById(id).innerHTML;
-            // var id='hey';
-            // alert('this is going to delete id:' + id);
-
-            // })
+            
         };
         enableClick();
     }
@@ -195,13 +196,13 @@ function changeUi(i = 1) {
     }
 }
 
-function deleteImage(id, n) {
+function deleteVid(id, n) {
     var data = {
         id
     }
     $.ajax({
         type: 'POST',
-        url: '/fileDelete/img',
+        url: '/fileDelete/vid',
         data: JSON.stringify(data),
         contentType: "application/json",
         success: function (request, status, headers) {
@@ -213,8 +214,8 @@ function deleteImage(id, n) {
 
             var modal = '#modal-del-' + n;
             $(modal).modal('hide');
-            displayAlert('Successfully deleted image!',2);
-            initImg();
+            displayAlert('Successfully deleted video!',2);
+            initVid();
         },
         error: function (request, textStatus, errorThrown) {
             alert(JSON.stringify(request));
@@ -224,23 +225,23 @@ function deleteImage(id, n) {
 }
 function enableClick() {
     var deleteBtn = document.querySelectorAll('button.delete-btn');
-    var imgId = document.querySelectorAll('span.img-id');
+    var vidId = document.querySelectorAll('span.vid-id');
 
     for (let i = 0; i < deleteBtn.length; i++) {
         let button = deleteBtn[i];
-        let id = imgId[i].innerHTML;
+        let id = vidId[i].innerHTML;
         button.addEventListener('click', function () {
-            deleteImage(id, i + 1);
+            deleteVid(id, i + 1);
         });
     }
     search();
 }
 
 
-function initImg() {
-    $.get("/fileRead/img", function (data) {
+function initVid() {
+    $.get("/fileRead/vid", function (data) {
         // alert(data);
-        setImages(data);
+        setVids(data);
     });
 }
 
@@ -274,6 +275,6 @@ function timeConverter(UNIX_timestamp) {
     return smallTime;
 }
 
-initImg();
+initVid();
 //   console.log(timeConverter(0));
 
