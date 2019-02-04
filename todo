@@ -13,6 +13,7 @@ var allTags =
 
 
 var docs =  [
+    "Administration",
     "PressMedia",
     "AnnualReport",
     "University",

@@ -4,6 +4,7 @@
 
 
 var setTags = [
+    "Index",
     "PressMedia",
     "AnnualReport",
     "University",

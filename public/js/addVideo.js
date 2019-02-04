@@ -3,6 +3,15 @@
 
 
 var setTags = [
+    "StudentResults",
+    "StudentSchedules",
+    "OrganisedResearchProgram",
+    "StudentZone_Y1",
+    "StudentZone_Y2",
+    "StudentZone_Y3",
+    "StudentZone_Y4",
+    "StudentZone_Y5",
+    "AdvertisingRecruitment",
     "PressMedia",
     "AnnualReport",
     "University",
