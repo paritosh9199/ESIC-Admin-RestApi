@@ -289,7 +289,7 @@ function checkFileType(type, file, cb) {
 }
 
 
-app.post('/fileUpload/:type', (req, res) => {
+app.post('/fileUpload/:type', authenticate, (req, res) => {
     var type = req.params.type;
     if (type == 'img') {
         imgUpload(req, res, (err) => {
