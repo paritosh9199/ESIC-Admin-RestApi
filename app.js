@@ -11,6 +11,8 @@ const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 
+var methodOverride = require('method-override');
+var https = require('https');
 var cors = require('cors');
 var session = require('express-session');
 var fs = require('fs');
@@ -68,11 +70,26 @@ var corsOptions = {
 
 var app = express();
 const port = process.env.PORT || 3000;
+app.use(methodOverride());
 
 app.use(bodyParser.json());
 // app.use(cors());
 // cors(corsOptions)
 app.use(express.static(__dirname + '/public'));
+app.use(function (req, res, next) {
+    if (env == 'production') {
+        if (req.secure) {
+            // request was via https, so do no special handling
+            next();
+        } else {
+            // request was via http, so redirect to https
+            res.redirect('https://' + req.headers.host + req.url);
+        }
+    } else {
+        next();
+    }
+});
+
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -728,6 +745,25 @@ app.post('/logout', authenticate, (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Started up at port: ${port}, environment: ${env}`);
-});
+if (env == 'production') {
+    let sslOptions = {
+        key: fs.readFileSync('./privkey.pem'),
+        cert: fs.readFileSync('./cert.pem')
+    };
+
+    let serverHttps = https.createServer(sslOptions, app).listen(app.get('port'), function () {
+        log(`Node Server running at port: ${app.get('port')} env: ${env}`);
+    });
+
+    // http.createServer(function (req, res) {
+    //     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    //     res.end();
+    // }).listen(80);
+
+} else {
+
+    app.listen(app.get('port'), process.env.IP, function () {
+        log(`Node Server running at port: ${app.get('port')} env: ${env}`);
+    });
+
+}

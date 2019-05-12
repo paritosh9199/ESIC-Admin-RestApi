@@ -101,6 +101,15 @@ UserSchema.statics.findByCredentials = function (email, password) {
     });
 };
 
+UserSchema.statics.accExists = function(email){
+    var User = this;
+
+    return User.findOne({ email }).then((user) => {
+        if (user) {
+            return Promise.reject();
+        }
+    });
+}
 UserSchema.pre('save', function (next) {
     var user = this;
 
