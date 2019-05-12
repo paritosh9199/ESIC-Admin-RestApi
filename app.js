@@ -751,8 +751,8 @@ if (env == 'production') {
         cert: fs.readFileSync('./cert.pem')
     };
 
-    let serverHttps = https.createServer(sslOptions, app).listen(app.get('port'), function () {
-        console.log(`Node Server running at port: ${app.get('port')} env: ${env}`);
+    let serverHttps = https.createServer(sslOptions, app).listen(port, function () {
+        console.log(`Node Server running at port: ${port} env: ${env}`);
     });
 
     // http.createServer(function (req, res) {
@@ -762,8 +762,8 @@ if (env == 'production') {
 
 } else {
 
-    app.listen(app.get('port'), process.env.IP, function () {
-        console.log(`Node Server running at port: ${app.get('port')} env: ${env}`);
+    app.listen(port, process.env.IP, function () {
+        console.log(`Node Server running at port: ${port} env: ${env}`);
     });
 
 }
