@@ -752,7 +752,7 @@ if (env == 'production') {
     };
 
     let serverHttps = https.createServer(sslOptions, app).listen(app.get('port'), function () {
-        log(`Node Server running at port: ${app.get('port')} env: ${env}`);
+        console.log(`Node Server running at port: ${app.get('port')} env: ${env}`);
     });
 
     // http.createServer(function (req, res) {
@@ -763,7 +763,7 @@ if (env == 'production') {
 } else {
 
     app.listen(app.get('port'), process.env.IP, function () {
-        log(`Node Server running at port: ${app.get('port')} env: ${env}`);
+        console.log(`Node Server running at port: ${app.get('port')} env: ${env}`);
     });
 
 }
